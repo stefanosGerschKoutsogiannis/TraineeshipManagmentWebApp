@@ -49,7 +49,6 @@ public class TraineeshipPosition {
     @Column(name = "pass_fail_grade")
     private boolean passFailGrade;
 
-
     @ManyToOne
     @JoinColumn(name = "student_student_id")
     private Student student;

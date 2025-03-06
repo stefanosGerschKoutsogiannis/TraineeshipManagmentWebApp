@@ -46,5 +46,6 @@ public class Student {
     private boolean lookingForTraineeship;
 
     @OneToOne
+    @JoinColumn(name = "traineeship_position_id")
     private TraineeshipPosition assignedTraineeshipPosition;
 }

@@ -24,8 +24,8 @@ public class Professor {
     @Column(name = "professor_id")
     private Long professorId;
 
-    @Column(name = "email_unique", nullable = false)
-    private String email_unique;
+    @Column(name = "email", nullable = false)
+    private String email;
 
     @Column(name = "username", nullable = false)
     private String username;

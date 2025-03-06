@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,4 +28,6 @@ public class CommitteeMember {
 
     @Column(name = "username", nullable = false)
     private String username;
+
+
 }
