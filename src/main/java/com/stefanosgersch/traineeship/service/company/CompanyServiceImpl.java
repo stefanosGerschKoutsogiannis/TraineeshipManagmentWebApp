@@ -15,6 +15,7 @@ public class CompanyServiceImpl implements CompanyService {
         this.companyRepository = companyRepository;
     }
 
+    // US8
     @Override
     public List<TraineeshipPosition> getAllTraineeshipPositions(Long companyId) {
         return companyRepository.findById(companyId)
@@ -22,6 +23,7 @@ public class CompanyServiceImpl implements CompanyService {
                 .orElse(Collections.emptyList());
     }
 
+    // US9
     @Override
     public List<TraineeshipPosition> getAssignedTraineeshipPositions(Long companyId) {
         return companyRepository.findById(companyId)
@@ -30,5 +32,14 @@ public class CompanyServiceImpl implements CompanyService {
                 .stream()
                 .filter(TraineeshipPosition::isAssigned)
                 .toList();
+    }
+
+    // US11
+    @Override
+    public void deleteTraineeshipPosition(Long companyId, TraineeshipPosition position) {
+        companyRepository.findById(companyId).ifPresent(company -> {
+            company.getPositions().remove(position);
+            companyRepository.save(company);
+        });
     }
 }

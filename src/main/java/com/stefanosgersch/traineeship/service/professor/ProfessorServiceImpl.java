@@ -15,6 +15,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         this.professorRepository = professorRepository;
     }
 
+    // US14
     @Override
     public List<TraineeshipPosition> getSupervisedPositions(Long professorId) {
         return professorRepository.findById(professorId)

@@ -12,4 +12,5 @@ public interface CompanyService {
 
     List<TraineeshipPosition> getAllTraineeshipPositions(Long companyId);
     List<TraineeshipPosition> getAssignedTraineeshipPositions(Long companyId);
+    void deleteTraineeshipPosition(Long companyId, TraineeshipPosition position);
 }

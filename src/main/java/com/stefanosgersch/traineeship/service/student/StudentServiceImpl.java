@@ -11,7 +11,7 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository = studentRepository;
     }
 
-
+    // US5
     @Override
     public void applyForTraineeship(Long studentId) {
         studentRepository.findById(studentId)
