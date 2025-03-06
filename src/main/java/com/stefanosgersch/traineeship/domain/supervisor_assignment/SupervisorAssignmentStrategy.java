@@ -4,5 +4,5 @@ import com.stefanosgersch.traineeship.domain.Professor;
 
 public interface SupervisorAssignmentStrategy {
 
-    Professor assignProfessor(Professor professor);
+    Professor assignProfessor(Long positionId);
 }

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PositionSearchStrategy {
 
-    List<TraineeshipPosition> searchPositions(Student student);
+    List<TraineeshipPosition> searchPositions(String applicantUsername);
 }
