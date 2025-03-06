@@ -7,6 +7,7 @@ import com.stefanosgersch.traineeship.repository.TraineeshipPositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -24,6 +25,15 @@ public class SearchBasedOnLocation implements PositionSearchStrategy {
 
     @Override
     public List<TraineeshipPosition> searchPositions(String applicantUsername) {
-        return List.of();
+        String studentLocation = studentRepository.findByUsername(applicantUsername).get().getPreferredLocation();
+        List<TraineeshipPosition> allPositions = traineeshipPositionRepository.findAll();
+        List<TraineeshipPosition> filteredPositions = new ArrayList<>();
+
+        allPositions.forEach(position -> {
+            if (!position.isAssigned() && position.getCompany().getCompanyLocation().equals(studentLocation)) {
+                filteredPositions.add(position);
+            }
+        });
+        return filteredPositions;
     }
 }

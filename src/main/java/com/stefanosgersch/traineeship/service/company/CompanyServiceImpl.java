@@ -27,7 +27,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(company);
     }
 
-    // US8
+    // US8, or query database
     @Override
     public List<TraineeshipPosition> getAvailablePositions(String username) {
         return companyRepository.findByUsername(username)
