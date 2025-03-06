@@ -11,9 +11,14 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository = studentRepository;
     }
 
+
     @Override
-    public void applyForTraineeship(Student student) {
-        Student s = studentRepository.findById(student.getStudentId()).orElse(null);
-        s.setLookingForTraineeship(true);
+    public void applyForTraineeship(Long studentId) {
+        studentRepository.findById(studentId)
+                .ifPresent(student -> {
+                    student.setLookingForTraineeship(true);
+                    studentRepository.save(student); //
+                });
     }
+
 }

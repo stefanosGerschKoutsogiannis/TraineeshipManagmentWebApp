@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface StudentService {
 
-    void applyForTraineeship(Student student);
+    void applyForTraineeship(Long studentId);
 
 }
