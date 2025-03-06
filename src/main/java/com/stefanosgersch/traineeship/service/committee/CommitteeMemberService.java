@@ -10,6 +10,6 @@ import java.util.List;
 public interface CommitteeMemberService {
 
     List<Student> getStudentsThatAppliedForTraineeship();
-    void assignStudentToTraineeship(Long studentId, Long traineeshipId);
+    void assignPosition(Long positionId, String studentUsername);
     public List<TraineeshipPosition> getTraineeshipPositionsInProgress();
 }

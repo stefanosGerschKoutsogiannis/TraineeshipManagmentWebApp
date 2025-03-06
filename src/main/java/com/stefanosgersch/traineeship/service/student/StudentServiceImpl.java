@@ -11,6 +11,17 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository = studentRepository;
     }
 
+    // US4
+    @Override
+    public Student retrieveStudentProfile(String username) {
+        return studentRepository.findByUsername(username).get();
+    }
+
+    @Override
+    public void saveStudentProfile(Student student) {
+        studentRepository.save(student);
+    }
+
     // US5
     @Override
     public void applyForTraineeship(Long studentId) {

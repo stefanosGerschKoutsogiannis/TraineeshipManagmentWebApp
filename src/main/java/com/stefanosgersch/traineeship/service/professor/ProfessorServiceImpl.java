@@ -15,6 +15,16 @@ public class ProfessorServiceImpl implements ProfessorService {
         this.professorRepository = professorRepository;
     }
 
+    // US13, build DTO
+    @Override
+    public Professor retrieveProfessorProfile(String username) {
+        return professorRepository.findByUsername(username).get();
+    }
+
+    public void saveProfessorProfile(Professor professor) {
+        professorRepository.save(professor);
+    }
+
     // US14
     @Override
     public List<TraineeshipPosition> getSupervisedPositions(Long professorId) {
@@ -22,6 +32,7 @@ public class ProfessorServiceImpl implements ProfessorService {
                 .map(Professor::getSupervisedPositions)
                 .orElse(Collections.emptyList());
     }
+
 
 
 }

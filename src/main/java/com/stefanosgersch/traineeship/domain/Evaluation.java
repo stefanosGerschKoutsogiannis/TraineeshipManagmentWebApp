@@ -11,21 +11,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "evaluation")
 public class Evaluation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "evaluation_id")
+    @Column(name = "id")
     private Long evaluationId;
 
-    //private String evaluationType;  // change this
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false)
+    private EvaluationType evaluationType;  // change this
 
-    @Column(name = "motivation")
+    @Column(name = "motivation", nullable = false)
     private int motivation;
 
-    @Column(name = "efficiency")
+    @Column(name = "efficiency", nullable = false)
     private int efficiency;
 
-    @Column(name = "effectiveness")
+    @Column(name = "effectiveness", nullable = false)
     private int effectiveness;
 }

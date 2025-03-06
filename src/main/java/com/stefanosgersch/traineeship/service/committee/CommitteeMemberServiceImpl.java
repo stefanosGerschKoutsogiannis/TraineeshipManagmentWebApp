@@ -5,6 +5,7 @@ import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.repository.StudentRepository;
 import com.stefanosgersch.traineeship.repository.TraineeshipPositionRepository;
 
+
 import java.util.List;
 
 public class CommitteeMemberServiceImpl implements CommitteeMemberService {
@@ -12,7 +13,8 @@ public class CommitteeMemberServiceImpl implements CommitteeMemberService {
     private final StudentRepository studentRepository;
     private final TraineeshipPositionRepository traineeshipPositionRepository;
 
-    public CommitteeMemberServiceImpl(StudentRepository studentRepository, TraineeshipPositionRepository traineeshipPositionRepository) {
+    public CommitteeMemberServiceImpl(StudentRepository studentRepository,
+                                      TraineeshipPositionRepository traineeshipPositionRepository) {
         this.studentRepository = studentRepository;
         this.traineeshipPositionRepository = traineeshipPositionRepository;
     }
@@ -31,14 +33,13 @@ public class CommitteeMemberServiceImpl implements CommitteeMemberService {
      * 1. find student and set lookingForTraineeship to false
      * 2. assign the traineeship to the student
      * 3. update traineeship student
-     * 3. save the student
-     *
+     * 3. save the student*
      * might face a problem, must throw something back
      */
     @Override
-    public void assignStudentToTraineeship(Long studentId, Long traineeshipId) {
-        studentRepository.findById(studentId).ifPresent(student -> {
-            traineeshipPositionRepository.findById(traineeshipId).ifPresent(traineeshipPosition -> {
+    public void assignPosition(Long positionId, String studentUsername) {
+        studentRepository.findByUsername(studentUsername).ifPresent(student -> {
+            traineeshipPositionRepository.findById(positionId).ifPresent(traineeshipPosition -> {
                 if (!traineeshipPosition.isAssigned()) {
                     student.setLookingForTraineeship(false);
                     student.setAssignedTraineeshipPosition(traineeshipPosition);
@@ -50,6 +51,10 @@ public class CommitteeMemberServiceImpl implements CommitteeMemberService {
                 }
             });
         });
+    }
+
+    public void assignSupervisor(Long positionId, String strategy) {
+        return;
     }
 
     // US20
