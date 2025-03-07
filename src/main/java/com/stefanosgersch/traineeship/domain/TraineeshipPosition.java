@@ -19,7 +19,7 @@ public class TraineeshipPosition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "traineeship_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long traineeshipId;
 
     @Column(name = "title")

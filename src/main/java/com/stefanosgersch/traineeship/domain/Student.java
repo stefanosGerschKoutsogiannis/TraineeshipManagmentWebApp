@@ -15,7 +15,7 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "student_id")
+    @Column(name = "id")
     private Long studentId;
 
     @Column(name = "email", nullable = false)
@@ -27,7 +27,7 @@ public class Student {
     @Column(name = "student_name")
     private String studentName;
 
-    @Column(name = "student_id_number")
+    @Column(name = "academic_id")
     private String studentIdNumber;
 
     @Column(name = "average_grade")

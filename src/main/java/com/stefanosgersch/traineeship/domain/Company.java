@@ -21,7 +21,7 @@ import java.util.List;
 public class Company {
 
     @Id
-    @Column(name = "company_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long companyId;
 

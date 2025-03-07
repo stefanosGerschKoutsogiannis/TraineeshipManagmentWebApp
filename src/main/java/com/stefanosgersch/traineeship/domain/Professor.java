@@ -21,7 +21,7 @@ public class Professor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "professor_id")
+    @Column(name = "id")
     private Long professorId;
 
     @Column(name = "email", nullable = false)

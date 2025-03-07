@@ -20,7 +20,7 @@ public class CommitteeMember {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "committee_member_id")
+    @Column(name = "id")
     private Long committeeMemberId;
 
     @Column(name = "email", nullable = false)
