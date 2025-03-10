@@ -12,24 +12,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(
-        name = "company",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "email_unique", columnNames = "email")
-        }
-)
-public class Company {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long companyId;
-
-    @Column(name="email", nullable = false)
-    private String email;
-
-    @Column(name = "username", nullable = false)
-    private String username;
+@Table(name = "company")
+@PrimaryKeyJoinColumn(name = "user_id")
+public class Company extends User {
 
     @Column(name="company_name")
     private String companyName;

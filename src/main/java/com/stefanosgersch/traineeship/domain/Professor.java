@@ -13,22 +13,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(
-        name = "professor",
-        uniqueConstraints = {@UniqueConstraint(name = "email_unique", columnNames = "email")}
-)
-public class Professor {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long professorId;
-
-    @Column(name = "email", nullable = false)
-    private String email;
-
-    @Column(name = "username", nullable = false)
-    private String username;
+@Table(name = "professor")
+@PrimaryKeyJoinColumn(name = "user_id")
+public class Professor extends User {
 
     @Column(name = "professor_name")
     private String professorName;

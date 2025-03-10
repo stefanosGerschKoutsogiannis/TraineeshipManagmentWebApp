@@ -8,21 +8,9 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(
-        uniqueConstraints = {@UniqueConstraint(name = "email_unique", columnNames = "email")}
-)
-public class Student {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long studentId;
-
-    @Column(name = "email", nullable = false)
-    private String email;
-
-    @Column(name = "username", nullable = false)
-    private String username;
+@Table(name = "student")
+@PrimaryKeyJoinColumn(name = "user_id")
+public class Student extends User {
 
     @Column(name = "student_name")
     private String studentName;

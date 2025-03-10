@@ -13,21 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(
-        uniqueConstraints = {@UniqueConstraint(name = "email_unique", columnNames = "email")}
-)
-public class CommitteeMember {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long committeeMemberId;
-
-    @Column(name = "email", nullable = false)
-    private String email;
-
-    @Column(name = "username", nullable = false)
-    private String username;
-
+@Table(name = "committee")
+@PrimaryKeyJoinColumn(name = "user_id")
+public class CommitteeMember extends User {
 
 }

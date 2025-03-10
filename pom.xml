@@ -12,7 +12,7 @@
 	<artifactId>traineeship</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>traineeship</name>
-	<description>An application for managment of traineeships</description>
+	<description>An application for management of traineeships</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -59,6 +59,14 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.33</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>6.4.3</version>
+		</dependency>
+
 
 
 	</dependencies>
