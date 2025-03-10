@@ -1,5 +1,6 @@
 package com.stefanosgersch.traineeship.service.professor;
 
+import com.stefanosgersch.traineeship.domain.Evaluation;
 import com.stefanosgersch.traineeship.domain.Professor;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.repository.ProfessorRepository;
@@ -15,7 +16,6 @@ public class ProfessorServiceImpl implements ProfessorService {
         this.professorRepository = professorRepository;
     }
 
-    // US13, build DTO
     @Override
     public Professor retrieveProfessorProfile(String username) {
         return professorRepository.findByUsername(username).get();
@@ -25,7 +25,6 @@ public class ProfessorServiceImpl implements ProfessorService {
         professorRepository.save(professor);
     }
 
-    // US14
     @Override
     public List<TraineeshipPosition> getSupervisedPositions(Long professorId) {
         return professorRepository.findById(professorId)
@@ -33,6 +32,15 @@ public class ProfessorServiceImpl implements ProfessorService {
                 .orElse(Collections.emptyList());
     }
 
+    @Override
+    public void evaluateAssignedPosition(Long positionId) {
+        return;
+    }
+
+    @Override
+    public void saveEvaluation(Long positionId, Evaluation evaluation) {
+
+    }
 
 
 }

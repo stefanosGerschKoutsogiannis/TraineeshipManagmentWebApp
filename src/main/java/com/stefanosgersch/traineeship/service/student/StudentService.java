@@ -1,6 +1,7 @@
 package com.stefanosgersch.traineeship.service.student;
 
 import com.stefanosgersch.traineeship.domain.Student;
+import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,4 +11,5 @@ public interface StudentService {
     void saveStudentProfile(Student student);
     void applyForTraineeship(Long studentId);
 
+    void saveLogbook(TraineeshipPosition position);
 }

@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return storedUser.isPresent();
     }
 
-    // Method defined in String Security UserDetailsService Interface
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)

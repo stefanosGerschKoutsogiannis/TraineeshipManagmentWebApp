@@ -9,7 +9,10 @@ import java.util.List;
 @Service
 public interface CommitteeMemberService {
 
-    List<Student> getStudentsThatAppliedForTraineeship();
+    List<Student> retrieveTraineeshipApplicants();
     void assignPosition(Long positionId, String studentUsername);
-    public List<TraineeshipPosition> getTraineeshipPositionsInProgress();
+    List<TraineeshipPosition> getTraineeshipPositionsInProgress();
+
+    void assignSupervisor(Long positionId, String strategy);
+    List<TraineeshipPosition> retrievePositionsForApplicant(String applicantUsername, String strategy);
 }

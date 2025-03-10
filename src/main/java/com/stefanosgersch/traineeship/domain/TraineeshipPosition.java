@@ -37,7 +37,7 @@ public class TraineeshipPosition {
     @Column(name = "topics")
     private String topics;
 
-    @Column(name = "slills")
+    @Column(name = "skills")
     private String skills;
 
     @Column(name = "is_assigned")

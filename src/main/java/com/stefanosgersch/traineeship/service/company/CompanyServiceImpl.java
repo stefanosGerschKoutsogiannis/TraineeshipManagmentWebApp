@@ -16,7 +16,6 @@ public class CompanyServiceImpl implements CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    // US7, change it to return only what is needed(create DTOs)
     @Override
     public Company retrieveCompanyProfile(String username) {
         return companyRepository.findByUsername(username).get();
@@ -27,17 +26,15 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(company);
     }
 
-    // US8, or query database
     @Override
-    public List<TraineeshipPosition> getAvailablePositions(String username) {
+    public List<TraineeshipPosition> retrieveAvailablePositions(String username) {
         return companyRepository.findByUsername(username)
                 .map(Company::getPositions)
                 .orElse(Collections.emptyList());
     }
 
-    // US9
     @Override
-    public List<TraineeshipPosition> getAssignedPositions(String username) {
+    public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
         return companyRepository.findByUsername(username)
                 .map(Company::getPositions)
                 .orElse(Collections.emptyList())
@@ -46,7 +43,6 @@ public class CompanyServiceImpl implements CompanyService {
                 .toList();
     }
 
-    // US10
     @Override
     public void addPosition(String username, TraineeshipPosition position) {
         companyRepository.findByUsername(username).ifPresent(company -> {
@@ -54,7 +50,6 @@ public class CompanyServiceImpl implements CompanyService {
         });
     }
 
-    // US11
     @Override
     public void deletePosition(String username, TraineeshipPosition position) {
         companyRepository.findByUsername(username).ifPresent(company -> {
@@ -63,11 +58,12 @@ public class CompanyServiceImpl implements CompanyService {
         });
     }
 
-    // US12
+    @Override
     public void evaluateAssignedPosition(Long positionId) {
         return;
     }
 
+    @Override
     public void saveEvaluation(Long positionId, Evaluation evaluation) {
         return;
     }

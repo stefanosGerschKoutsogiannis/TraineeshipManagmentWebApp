@@ -1,6 +1,7 @@
 package com.stefanosgersch.traineeship.service.student;
 
 import com.stefanosgersch.traineeship.domain.Student;
+import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.repository.StudentRepository;
 
 public class StudentServiceImpl implements StudentService {
@@ -11,7 +12,6 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository = studentRepository;
     }
 
-    // US4
     @Override
     public Student retrieveStudentProfile(String username) {
         return studentRepository.findByUsername(username).get();
@@ -22,7 +22,6 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.save(student);
     }
 
-    // US5
     @Override
     public void applyForTraineeship(Long studentId) {
         studentRepository.findById(studentId)
@@ -30,6 +29,11 @@ public class StudentServiceImpl implements StudentService {
                     student.setLookingForTraineeship(true);
                     studentRepository.save(student); //
                 });
+    }
+
+    @Override
+    public void saveLogbook(TraineeshipPosition position) {
+        return;
     }
 
 }
