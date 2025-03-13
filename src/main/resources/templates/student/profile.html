@@ -60,17 +60,17 @@
 <header class="header">
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">My Minimal App</a>
+      <a class="navbar-brand" th:href="@{/student/dashboard}">Traineeship Management App</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
+            <a class="nav-link" th:href="@{/student/profile}">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Logbook</a>
+            <a class="nav-link" th:href="@{/student/logbook}">Logbook</a>
           </li>
         </ul>
       </div>
@@ -81,36 +81,36 @@
 <main class="content">
   <div class="form-container">
     <h2>Student Information</h2>
-    <form id="studentForm">
+    <form id="studentForm" th:action="@{/student/save_profile}" th:object="${student}" method="post">
       <div class="mb-3">
-        <label for="studentName" class="form-label">Student Name:</label>
-        <input type="text" class="form-control" id="studentName" name="studentName" required>
+        <label class="form-label">Student Name:</label>
+        <input type="text" class="form-control" th:field="*{studentName}" name="studentName" required>
       </div>
       <div class="mb-3">
-        <label for="studentIdNumber" class="form-label">Academic ID:</label>
-        <input type="text" class="form-control" id="studentIdNumber" name="studentIdNumber" required>
+        <label class="form-label">Academic ID:</label>
+        <input type="text" class="form-control" th:field="*{academicId}" name="studentIdNumber" required>
       </div>
       <div class="mb-3">
-        <label for="averageGrade" class="form-label">Average Grade:</label>
-        <input type="number" step="0.01" class="form-control" id="averageGrade" name="averageGrade" required>
+        <label class="form-label">Average Grade:</label>
+        <input type="number" step="0.01" class="form-control" th:field="*{averageGrade}" name="averageGrade" required>
       </div>
       <div class="mb-3">
-        <label for="preferredLocation" class="form-label">Preferred Location:</label>
-        <input type="text" class="form-control" id="preferredLocation" name="preferredLocation">
+        <label class="form-label">Preferred Location:</label>
+        <input type="text" class="form-control" th:field="*{preferredLocation}" name="preferredLocation">
       </div>
       <div class="mb-3">
-        <label for="interests" class="form-label">Interests:</label>
-        <textarea class="form-control" id="interests" name="interests"></textarea>
+        <label class="form-label">Interests:</label>
+        <textarea class="form-control" th:field="*{interests}" name="interests"></textarea>
       </div>
       <div class="mb-3">
-        <label for="skills" class="form-label">Skills:</label>
-        <textarea class="form-control" id="skills" name="skills"></textarea>
+        <label class="form-label">Skills:</label>
+        <textarea class="form-control" th:field="*{skills}" name="skills"></textarea>
       </div>
       <div class="mb-3 form-check">
         <input type="checkbox" class="form-check-input" id="lookingForTraineeship" name="lookingForTraineeship">
         <label class="form-check-label" for="lookingForTraineeship">Looking for Traineeship?</label>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Save</button>
     </form>
   </div>
 </main>
