@@ -4,10 +4,12 @@ import com.stefanosgersch.traineeship.domain.Evaluation;
 import com.stefanosgersch.traineeship.domain.Professor;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.repository.ProfessorRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 
+@Service
 public class ProfessorServiceImpl implements ProfessorService {
 
     private final ProfessorRepository professorRepository;

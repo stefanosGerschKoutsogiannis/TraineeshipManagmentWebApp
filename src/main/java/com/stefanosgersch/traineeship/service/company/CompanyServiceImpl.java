@@ -4,10 +4,12 @@ import com.stefanosgersch.traineeship.domain.Company;
 import com.stefanosgersch.traineeship.domain.Evaluation;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.repository.CompanyRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
 
+@Service
 public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
@@ -60,7 +62,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void evaluateAssignedPosition(Long positionId) {
-        return;
+        return ;
     }
 
     @Override

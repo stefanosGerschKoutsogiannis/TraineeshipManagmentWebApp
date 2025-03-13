@@ -4,7 +4,6 @@ import com.stefanosgersch.traineeship.domain.Student;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface StudentService {
 
     Student retrieveStudentProfile(String username);

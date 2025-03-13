@@ -6,24 +6,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-public class UserServiceImpl implements UserService, UserDetailsService {
+@Service
+public class UserServiceImpl implements UserService {
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
 
-    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
 
     @Override
     public void saveUser(User user) {
-        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+        user.setPassword("password");
         userRepository.save(user);
     }
 
@@ -31,13 +30,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public boolean isUserPresent(User user) {
         Optional<User> storedUser = userRepository.findByUsername(user.getUsername());
         return storedUser.isPresent();
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(
-                        String.format("User %s not found", username)
-                ));
     }
 }

@@ -8,10 +8,12 @@ import com.stefanosgersch.traineeship.domain.supervisor_assignment.SupervisorAss
 import com.stefanosgersch.traineeship.domain.supervisor_assignment.SupervisorAssignmentStrategy;
 import com.stefanosgersch.traineeship.repository.StudentRepository;
 import com.stefanosgersch.traineeship.repository.TraineeshipPositionRepository;
+import org.springframework.stereotype.Service;
 
 
 import java.util.List;
 
+@Service
 public class CommitteeMemberServiceImpl implements CommitteeMemberService {
 
     private final StudentRepository studentRepository;
@@ -49,13 +51,7 @@ public class CommitteeMemberServiceImpl implements CommitteeMemberService {
         studentRepository.findByUsername(studentUsername).ifPresent(student -> {
             traineeshipPositionRepository.findById(positionId).ifPresent(traineeshipPosition -> {
                 if (!traineeshipPosition.isAssigned()) {
-                    student.setLookingForTraineeship(false);
-                    student.setAssignedTraineeshipPosition(traineeshipPosition);
-                    traineeshipPosition.setStudent(student);
-                    traineeshipPosition.setAssigned(true);
-
-                    traineeshipPositionRepository.save(traineeshipPosition);
-                    studentRepository.save(student);
+                    assignPositionToStudent(student, traineeshipPosition);
                 }
             });
         });
@@ -82,4 +78,13 @@ public class CommitteeMemberServiceImpl implements CommitteeMemberService {
                 .toList();
     }
 
+    private void assignPositionToStudent(Student student, TraineeshipPosition traineeshipPosition) {
+        student.setLookingForTraineeship(false);
+        student.setAssignedTraineeshipPosition(traineeshipPosition);
+        traineeshipPosition.setStudent(student);
+        traineeshipPosition.setAssigned(true);
+
+        traineeshipPositionRepository.save(traineeshipPosition);
+        studentRepository.save(student);
+    }
 }
