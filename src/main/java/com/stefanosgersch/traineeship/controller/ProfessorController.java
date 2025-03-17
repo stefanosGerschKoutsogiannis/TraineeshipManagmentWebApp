@@ -34,22 +34,15 @@ public class ProfessorController {
     public String retrieveProfessorProfile(Model model) {
         // bla bla
         ProfessorDTO dto = new ProfessorDTO();
-        dto.setProfessorName("Stefanos");
-        dto.setEmail("cs05046@uoi.gr");
-        dto.setInterests("C, C++");
-        dto.setSupervisedPositions(new ArrayList<>());
         model.addAttribute("professorDTO", dto);
         return "professor/profile";
     }
 
     @RequestMapping("/save_profile")
     public String saveProfessorProfile(@ModelAttribute("professorDTO") ProfessorDTO professorDTO, Model model) {
+        // dto to object
+        // get username, password, role from session
         Professor professor = new Professor();
-        professor.setProfessorName("Stefanos");
-        professor.setEmail("cs05046@uoi.gr");
-        professor.setInterests("C, C++");
-        List<TraineeshipPosition> positions = new ArrayList<>();
-        professor.setSupervisedPositions(positions);
         professor.setUsername("sdgag");
         professor.setPassword("ldsga");
         professor.setRole(Role.PROFESSOR);

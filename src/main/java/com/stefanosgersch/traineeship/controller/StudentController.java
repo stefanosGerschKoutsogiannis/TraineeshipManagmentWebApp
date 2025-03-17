@@ -31,29 +31,14 @@ public class StudentController {
         // add data to the model
         //model.addAllAttributes(studentService.retrieveStudentProfile())
         StudentDTO dummyStudent = new StudentDTO();
-        dummyStudent.setStudentName("John Doe");
-        dummyStudent.setEmail("john.doe@gmail.com");
-        dummyStudent.setAcademicId("123456");
-        dummyStudent.setAverageGrade(8.5);
-        dummyStudent.setPreferredLocation("Anywhere");
-        dummyStudent.setInterests("Programming, Data Science");
-        dummyStudent.setSkills("Java, Python, SQL");
-        dummyStudent.setLookingForTraineeship(true);
         model.addAttribute("student", dummyStudent);
         return "student/profile";
     }
 
     @RequestMapping("/save_profile")
     public String saveStudentProfile(@ModelAttribute("studentDTO") StudentDTO studentDTO, Model model) {
+        // dto to object
         Student student = new Student();
-        student.setStudentName(studentDTO.getStudentName());
-        student.setAcademicId(studentDTO.getAcademicId());
-        student.setAverageGrade(studentDTO.getAverageGrade());
-        student.setPreferredLocation(studentDTO.getPreferredLocation());
-        student.setInterests(studentDTO.getInterests());
-        student.setSkills(studentDTO.getSkills());
-        student.setLookingForTraineeship(studentDTO.isLookingForTraineeship());
-        student.setEmail(studentDTO.getEmail());
         student.setPassword("lalala");
         student.setRole(Role.STUDENT);
         student.setUsername("username");
