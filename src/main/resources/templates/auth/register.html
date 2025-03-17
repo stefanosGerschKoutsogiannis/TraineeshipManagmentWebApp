@@ -48,13 +48,11 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-
         .register-button-container {
             display: flex;
             justify-content: center;
             margin-top: 20px;
         }
-
         .register-button {
             background-color: #007bff;
             color: white;
@@ -87,28 +85,40 @@
 </head>
 <body>
 <h1>Register</h1>
-<div class="form-container">
+
+<div th:if="${userTypeNotSelected}" class="form-container">
+    <form th:action="@{/register}" method="get">
+        <label>Select your role</label>
+        <select name="userType" class="form-select" required>
+            <option value="" disabled selected>Select a role</option>
+            <option value="CommitteeMember">Committee Member</option>
+            <option value="Student">Student</option>
+            <option value="Company">Company</option>
+            <option value="Professor">Professor</option>
+        </select>
+        <div class="register-button-container">
+            <button type="submit" class="register-button">Next</button>
+        </div>
+    </form>
+</div>
+
+<div class="form-container" th:if="${user}">
     <form th:action="@{/save}" th:object="${user}" method="post">
+
+        <input type="hidden" name="userType" th:value="${userType}">
+
         <label>Username</label>
-        <input type="text" th:field="*{username}" placeholder="Enter your username" required>
+        <input type="text" th:field="*{username}" class="form-control" placeholder="Enter your username" required>
 
         <label>Email</label>
-        <input type="email" th:field="*{email}" placeholder="Enter your email" required>
+        <input type="email" th:field="*{email}" class="form-control" placeholder="Enter your email" required>
 
         <label>Password</label>
         <div class="password-toggle">
-            <input type="password" th:field="*{password}" placeholder="Enter your password" required id="passwordInput">
+            <input type="password" th:field="*{password}" class="form-control" placeholder="Enter your password" required id="passwordInput">
             <span class="toggle-icon" id="togglePassword">👁️</span>
         </div>
 
-        <label>Role</label>
-        <select th:field="*{role}" name="role" required>
-            <option value="" disabled selected>Select your role</option>
-            <option value="committee">Committee Member</option>
-            <option value="student">Student</option>
-            <option value="company">Company</option>
-            <option value="professor">Professor</option>
-        </select>
         <div class="register-button-container">
             <button type="submit" class="register-button">Register</button>
         </div>

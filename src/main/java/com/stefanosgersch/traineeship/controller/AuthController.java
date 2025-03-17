@@ -2,19 +2,13 @@ package com.stefanosgersch.traineeship.controller;
 
 import com.stefanosgersch.traineeship.domain.*;
 import com.stefanosgersch.traineeship.service.user.UserService;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Logger;
+import java.util.Map;
+
 
 @Controller
 public class AuthController {
@@ -30,43 +24,38 @@ public class AuthController {
         return "auth/login";
     }
 
-    // TODO: hide register behind a register as page
-    /*
-    @RequestMapping("/register")
-    public String register(Model model) {
-        return "auth/register_as";
-    }
-     */
-
-    /*
-    @RequestMapping("/register_as")
-    public string registerAs(@RequestParam("userType") String userType, Model model) {
-
-
-     */
 
     @RequestMapping("/register")
-    public String register(@RequestParam("userType") String userType, Model model) {
-        User user;
-        switch (userType) {
-            case "CommitteeMember":
-                user = new CommitteeMember();
-                break;
-            case "Professor":
-                user = new Professor();
-                break;
-            case "Company":
-                user = new Company();
-                break;
-            default:
-                user = new Student();
+    public String register(@RequestParam(value = "userType", required = false) String userType, Model model) {
+        if (userType == null) {
+            model.addAttribute("userTypeNotSelected", true);
+            return "auth/register";
         }
+
+        User user = createUserByType(userType);
+        if (user == null) {
+            model.addAttribute("errorMessage", "Invalid user type selected.");
+            return "auth/register";
+        }
+
         model.addAttribute("user", user);
+        model.addAttribute("userType", userType);
         return "auth/register";
     }
 
     @RequestMapping("/save")
-    public String registerUser(@ModelAttribute("user") User user, Model model) {
+    public String registerUser(@RequestParam("userType") String userType, Model model, @RequestParam Map<String, String> formData) {
+        User user = createUserByType(userType);
+
+        if (user == null) {
+            model.addAttribute("errorMessage", "Invalid user type.");
+            return "auth/register";
+        }
+
+        user.setUsername(formData.get("username"));
+        user.setEmail(formData.get("email"));
+        user.setPassword(formData.get("password"));
+        setUserRole(user);
 
         if (userService.isUserPresent(user)) {
             model.addAttribute("userAlreadyRegisteredMessage", "User has already been registered.");
@@ -76,5 +65,32 @@ public class AuthController {
         userService.saveUser(user);
         model.addAttribute("userRegisteredSuccessfullyMessage", "User registered successfully");
         return "auth/login";
+    }
+
+    private User createUserByType(String userType) {
+        switch (userType) {
+            case "CommitteeMember":
+                return new CommitteeMember();
+            case "Professor":
+                return new Professor();
+            case "Company":
+                return new Company();
+            case "Student":
+                return new Student();
+            default:
+                return null;
+        }
+    }
+
+    private void setUserRole(User user) {
+        if (user instanceof Student) {
+            user.setRole(Role.STUDENT);
+        } else if (user instanceof CommitteeMember) {
+            user.setRole(Role.COMMITTEE_MEMBER);
+        } else if (user instanceof Company) {
+            user.setRole(Role.COMPANY);
+        } else if (user instanceof Professor) {
+            user.setRole(Role.PROFESSOR);
+        }
     }
 }

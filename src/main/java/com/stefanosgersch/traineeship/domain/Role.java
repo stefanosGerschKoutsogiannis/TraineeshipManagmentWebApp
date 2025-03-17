@@ -4,5 +4,5 @@ public enum Role {
     STUDENT,
     PROFESSOR,
     COMPANY,
-    TRAINEESHIP_COMMITTEE_MEMBER
+    COMMITTEE_MEMBER
 }

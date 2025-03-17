@@ -9,8 +9,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -42,6 +40,23 @@ public class Student extends User {
     @OneToOne
     @JoinColumn(name = "traineeship_position_id")
     private TraineeshipPosition assignedTraineeshipPosition;
+
+    public Student() {
+        super();
+    }
+
+    public Student(String email, String username, String password, Role role, String studentName, String academicId, double averageGrade, String preferredLocation, String interests, String skills, boolean lookingForTraineeship, TraineeshipPosition assignedTraineeshipPosition) {
+        super(email, username, password, role);
+        this.studentName = studentName;
+        this.academicId = academicId;
+        this.averageGrade = averageGrade;
+        this.preferredLocation = preferredLocation;
+        this.interests = interests;
+        this.skills = skills;
+        this.lookingForTraineeship = lookingForTraineeship;
+        this.assignedTraineeshipPosition = assignedTraineeshipPosition;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
