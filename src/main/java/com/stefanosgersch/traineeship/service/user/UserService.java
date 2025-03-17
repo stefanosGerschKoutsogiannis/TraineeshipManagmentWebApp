@@ -7,4 +7,5 @@ public interface UserService {
 
     void saveUser(User user);
     boolean isUserPresent(User user);
+    String authenticateUser();
 }
