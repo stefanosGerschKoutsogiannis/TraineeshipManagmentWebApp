@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 public interface StudentService {
 
-    Student retrieveStudentProfile(Long studentId);
+    Student retrieveStudentProfile(String username);
     void saveStudentProfile(Student student);
-    void applyForTraineeship(Long studentId);
+    void applyForTraineeship(String username);
 
     void saveLogbook(TraineeshipPosition position);
 }

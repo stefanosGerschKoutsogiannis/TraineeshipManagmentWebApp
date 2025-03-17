@@ -40,6 +40,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return authentication.getName();
     }
 
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username).orElseThrow(

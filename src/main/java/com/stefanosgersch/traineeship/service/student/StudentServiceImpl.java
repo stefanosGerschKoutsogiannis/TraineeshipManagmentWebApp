@@ -19,8 +19,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student retrieveStudentProfile(Long studentId) {
-        return studentRepository.findById(studentId).get();
+    public Student retrieveStudentProfile(String username) {
+        return studentRepository.findByUsername(username).get();
     }
 
     @Override
@@ -29,8 +29,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void applyForTraineeship(Long studentId) {
-        studentRepository.findById(studentId)
+    public void applyForTraineeship(String username) {
+        studentRepository.findByUsername(username)
                 .ifPresent(student -> {
                     student.setLookingForTraineeship(true);
                     studentRepository.save(student);

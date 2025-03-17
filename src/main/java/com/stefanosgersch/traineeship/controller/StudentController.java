@@ -5,6 +5,8 @@ import com.stefanosgersch.traineeship.domain.Role;
 import com.stefanosgersch.traineeship.domain.Student;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.service.student.StudentService;
+import com.stefanosgersch.traineeship.service.user.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StudentController {
 
     private final StudentService studentService;
+    private final UserService userService;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, UserService userService) {
         this.studentService = studentService;
+        this.userService = userService;
     }
 
     @RequestMapping("/dashboard")
@@ -27,11 +31,8 @@ public class StudentController {
 
     @RequestMapping("/profile")
     public String retrieveStudentProfile(Model model) {
-        // get username from auth
-        // add data to the model
-        //model.addAllAttributes(studentService.retrieveStudentProfile())
-        StudentDTO dummyStudent = new StudentDTO();
-        model.addAttribute("student", dummyStudent);
+        String username = userService.authenticateUser();
+        model.addAttribute("student", studentService.retrieveStudentProfile(username));
         return "student/profile";
     }
 
@@ -39,7 +40,7 @@ public class StudentController {
     public String saveStudentProfile(@ModelAttribute("studentDTO") StudentDTO studentDTO, Model model) {
         // dto to object
         Student student = new Student();
-        student.setPassword("lalala");
+        student.setPassword("fuck");
         student.setRole(Role.STUDENT);
         student.setUsername("username");
 
