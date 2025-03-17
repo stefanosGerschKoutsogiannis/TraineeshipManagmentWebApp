@@ -16,7 +16,7 @@ public class Student extends User {
     private String studentName;
 
     @Column(name = "academic_id")
-    private String studentIdNumber;
+    private String academicId;
 
     @Column(name = "average_grade")
     private double averageGrade;
@@ -31,7 +31,7 @@ public class Student extends User {
     private String skills;
 
     @Column(name = "looking_for_traineeship")
-    private boolean lookingForTraineeship;
+    private boolean lookingForTraineeship = false;
 
     @OneToOne
     @JoinColumn(name = "traineeship_position_id")

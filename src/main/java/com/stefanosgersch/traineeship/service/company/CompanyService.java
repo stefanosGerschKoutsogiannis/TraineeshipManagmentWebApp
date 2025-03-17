@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface CompanyService {
 
-    Company retrieveCompanyProfile(String username);
+    Company retrieveCompanyProfile(Long companyId);
     void saveCompanyProfile(Company company);
-    List<TraineeshipPosition> retrieveAvailablePositions(String username);
-    List<TraineeshipPosition> retrieveAssignedPositions(String username);
-    void addPosition(String username, TraineeshipPosition position);
-    void deletePosition(String username, TraineeshipPosition position);
+    List<TraineeshipPosition> retrieveAvailablePositions(Long companyId);
+    List<TraineeshipPosition> retrieveAssignedPositions(Long companyId);
+    void addPosition(Long companyId, TraineeshipPosition position);
+    void deletePosition(Long companyId, TraineeshipPosition position);
 
     void evaluateAssignedPosition(Long positionId);
     void saveEvaluation(Long positionId, Evaluation evaluation);

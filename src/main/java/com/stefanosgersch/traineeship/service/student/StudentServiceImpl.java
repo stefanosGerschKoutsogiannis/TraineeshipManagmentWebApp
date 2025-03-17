@@ -3,20 +3,24 @@ package com.stefanosgersch.traineeship.service.student;
 import com.stefanosgersch.traineeship.domain.Student;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.repository.StudentRepository;
+import com.stefanosgersch.traineeship.repository.TraineeshipPositionRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
     private StudentRepository studentRepository;
+    private TraineeshipPositionRepository traineeshipPositionRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository,
+                              TraineeshipPositionRepository traineeshipPositionRepository) {
         this.studentRepository = studentRepository;
+        this.traineeshipPositionRepository = traineeshipPositionRepository;
     }
 
     @Override
-    public Student retrieveStudentProfile(String username) {
-        return studentRepository.findByUsername(username).get();
+    public Student retrieveStudentProfile(Long studentId) {
+        return studentRepository.findById(studentId).get();
     }
 
     @Override
@@ -35,7 +39,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void saveLogbook(TraineeshipPosition position) {
-        return ;
+         traineeshipPositionRepository.save(position);
     }
 
 }

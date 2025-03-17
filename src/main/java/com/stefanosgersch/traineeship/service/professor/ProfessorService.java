@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface ProfessorService {
 
-    Professor retrieveProfessorProfile(String username);
+    Professor retrieveProfessorProfile(Long professorId);
     void saveProfessorProfile(Professor professor);
-    List<TraineeshipPosition> getSupervisedPositions(Long professorId);
+    List<TraineeshipPosition> retrieveAssignedPositions(Long professorId);
     void evaluateAssignedPosition(Long positionId);
     void saveEvaluation(Long positionId, Evaluation evaluation);
 

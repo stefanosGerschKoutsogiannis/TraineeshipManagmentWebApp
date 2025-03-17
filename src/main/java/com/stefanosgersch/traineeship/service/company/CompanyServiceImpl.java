@@ -19,8 +19,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company retrieveCompanyProfile(String username) {
-        return companyRepository.findByUsername(username).get();
+    public Company retrieveCompanyProfile(Long companyId) {
+        return companyRepository.findById(companyId).get();
     }
 
     @Override
@@ -29,15 +29,15 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<TraineeshipPosition> retrieveAvailablePositions(String username) {
-        return companyRepository.findByUsername(username)
+    public List<TraineeshipPosition> retrieveAvailablePositions(Long companyId) {
+        return companyRepository.findById(companyId)
                 .map(Company::getPositions)
                 .orElse(Collections.emptyList());
     }
 
     @Override
-    public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
-        return companyRepository.findByUsername(username)
+    public List<TraineeshipPosition> retrieveAssignedPositions(Long companyId) {
+        return companyRepository.findById(companyId)
                 .map(Company::getPositions)
                 .orElse(Collections.emptyList())
                 .stream()
@@ -46,15 +46,15 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void addPosition(String username, TraineeshipPosition position) {
-        companyRepository.findByUsername(username).ifPresent(company -> {
+    public void addPosition(Long companyId, TraineeshipPosition position) {
+        companyRepository.findById(companyId).ifPresent(company -> {
             company.getPositions().add(position);
         });
     }
 
     @Override
-    public void deletePosition(String username, TraineeshipPosition position) {
-        companyRepository.findByUsername(username).ifPresent(company -> {
+    public void deletePosition(Long companyId, TraineeshipPosition position) {
+        companyRepository.findById(companyId).ifPresent(company -> {
             company.getPositions().remove(position);
             companyRepository.save(company);
         });
@@ -62,7 +62,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void evaluateAssignedPosition(Long positionId) {
-        return ;
+        return;
     }
 
     @Override

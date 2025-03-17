@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Information Form</title>
+  <title>Professor Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
@@ -27,6 +27,9 @@
     .content {
       flex-grow: 1;
       padding: 20px;
+      display: flex; /* Added to enable flexbox centering */
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
     }
 
     .footer {
@@ -49,6 +52,10 @@
       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
     }
 
+    .welcome-header {
+      text-align: center; /* Center the text within the welcome-header */
+    }
+
     .form-container{
       width: 80%;
       margin: 20px auto;
@@ -60,17 +67,17 @@
 <header class="header">
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" th:href="@{/student/dashboard}">Traineeship Management App</a>
+      <a class="navbar-brand" th:href="@{/professor/dashboard}">Traineeship Management App</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/student/profile}">Profile</a>
+            <a class="nav-link" th:href="@{/professor/profile}">Profile</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:href="@{/student/logbook}">Logbook</a>
+            <a class="nav-link" th:href="@{/professor/supervised_traineeships}">Supervised Traineeships</a>
           </li>
         </ul>
       </div>
@@ -79,43 +86,8 @@
 </header>
 
 <main class="content">
-  <div class="form-container">
-    <h2>Student Information</h2>
-    <form id="studentForm" th:action="@{/student/save_profile}" th:object="${student}" method="post">
-      <div class="mb-3">
-        <label class="form-label">Student Name:</label>
-        <input type="text" class="form-control" th:field="*{studentName}" name="studentName" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Student email:</label>
-        <input type="text" class="form-control" th:field="*{email}" name="studentName" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Academic ID:</label>
-        <input type="text" class="form-control" th:field="*{academicId}" name="studentIdNumber" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Average Grade:</label>
-        <input type="number" step="0.01" class="form-control" th:field="*{averageGrade}" name="averageGrade" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Preferred Location:</label>
-        <input type="text" class="form-control" th:field="*{preferredLocation}" name="preferredLocation">
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Interests:</label>
-        <textarea class="form-control" th:field="*{interests}" name="interests"></textarea>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Skills:</label>
-        <textarea class="form-control" th:field="*{skills}" name="skills"></textarea>
-      </div>
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="lookingForTraineeship" name="lookingForTraineeship">
-        <label class="form-check-label" for="lookingForTraineeship">Looking for Traineeship?</label>
-      </div>
-      <button type="submit" class="btn btn-primary">Save</button>
-    </form>
+  <div class="welcome-header">
+    <h1>Welcome back Professor</h1>
   </div>
 </main>
 
