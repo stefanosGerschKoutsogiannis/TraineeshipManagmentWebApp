@@ -37,15 +37,9 @@ public class StudentController {
     }
 
     @RequestMapping("/save_profile")
-    public String saveStudentProfile(@ModelAttribute("studentDTO") StudentDTO studentDTO, Model model) {
+    public String saveStudentProfile(@ModelAttribute("student") Student student, Model model) {
         // dto to object
-        Student student = new Student();
-        student.setPassword("fuck");
-        student.setRole(Role.STUDENT);
-        student.setUsername("username");
-
         studentService.saveStudentProfile(student);
-
         return "/student/dashboard";
     }
 

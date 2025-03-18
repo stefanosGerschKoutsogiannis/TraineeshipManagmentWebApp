@@ -77,16 +77,20 @@
   <form th:action="@{/login}" method="post">
     <div class="mb-3">
       <label class="form-label">Username</label>
-      <input type="text" class="form-control" placeholder="Enter your username" required>
+      <input type="text" class="form-control" th:placeholder="Username" required>
     </div>
     <div class="mb-3 password-toggle">
       <label class="form-label">Password</label>
-      <input type="password" class="form-control" placeholder="Enter your password" required id="passwordInput">
+      <input type="password" class="form-control" th:placeholder="Password" required id="passwordInput">
       <span class="toggle-icon" id="togglePassword">👁️</span>
     </div>
     <div class="login-button-container">
       <button type="submit" class="login-button">Login</button>
     </div>
+
+    <div th:if="${param.error}"><p>Username or Password is invalid.</p></div> <br/>
+
+    <span th:utext="${successMessage}"></span>
   </form>
 </div>
 

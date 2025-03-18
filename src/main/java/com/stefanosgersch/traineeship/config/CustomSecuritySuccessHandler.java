@@ -1,4 +1,4 @@
-package com.stefanosgersch.traineeship.security;
+package com.stefanosgersch.traineeship.config;
 
 import com.stefanosgersch.traineeship.domain.Role;
 import jakarta.servlet.http.HttpServletRequest;

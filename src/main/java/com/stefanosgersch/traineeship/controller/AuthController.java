@@ -58,13 +58,14 @@ public class AuthController {
         setUserRole(user);
 
         if (userService.isUserPresent(user)) {
+            // add this with if to register
             model.addAttribute("userAlreadyRegisteredMessage", "User has already been registered.");
-            return "auth/register";
+            return "redirect:auth/login";
         }
 
         userService.saveUser(user);
         model.addAttribute("userRegisteredSuccessfullyMessage", "User registered successfully");
-        return "auth/login";
+        return "redirect:auth/login";
     }
 
     private User createUserByType(String userType) {

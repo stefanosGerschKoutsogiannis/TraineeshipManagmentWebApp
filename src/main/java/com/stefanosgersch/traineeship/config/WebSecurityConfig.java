@@ -1,8 +1,6 @@
 package com.stefanosgersch.traineeship.config;
 
-import com.stefanosgersch.traineeship.domain.Role;
 import com.stefanosgersch.traineeship.repository.UserRepository;
-import com.stefanosgersch.traineeship.security.CustomSecuritySuccessHandler;
 import com.stefanosgersch.traineeship.service.user.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import java.util.Arrays;
 
 
 @Configuration
@@ -32,7 +28,7 @@ public class WebSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserServiceImpl(userRepository);
+        return new UserServiceImpl(userRepository, passwordEncoder());
     }
 
     @Bean
@@ -60,7 +56,6 @@ public class WebSecurityConfig {
         return authProvider;
     }
 
-    // add a security filter chain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
