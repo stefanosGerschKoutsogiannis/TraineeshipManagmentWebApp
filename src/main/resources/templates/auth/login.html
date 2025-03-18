@@ -77,11 +77,11 @@
   <form th:action="@{/login}" method="post">
     <div class="mb-3">
       <label class="form-label">Username</label>
-      <input type="text" class="form-control" th:placeholder="Username" required>
+      <input type="text" class="form-control" name="username" th:placeholder="Username" required>
     </div>
     <div class="mb-3 password-toggle">
       <label class="form-label">Password</label>
-      <input type="password" class="form-control" th:placeholder="Password" required id="passwordInput">
+      <input type="password" class="form-control" name="password" th:placeholder="Password" required id="passwordInput">
       <span class="toggle-icon" id="togglePassword">👁️</span>
     </div>
     <div class="login-button-container">
