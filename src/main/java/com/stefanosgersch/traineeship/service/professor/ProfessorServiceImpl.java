@@ -19,8 +19,8 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public Professor retrieveProfessorProfile(Long professorId) {
-        return professorRepository.findById(professorId).get();
+    public Professor retrieveProfessorProfile(String username) {
+        return professorRepository.findByUsername(username).get();
     }
 
     public void saveProfessorProfile(Professor professor) {
@@ -28,8 +28,8 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public List<TraineeshipPosition> retrieveAssignedPositions(Long professorId) {
-        return professorRepository.findById(professorId)
+    public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
+        return professorRepository.findByUsername(username)
                 .map(Professor::getSupervisedPositions)
                 .orElse(Collections.emptyList());
     }

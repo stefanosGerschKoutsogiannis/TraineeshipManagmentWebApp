@@ -5,6 +5,7 @@ import com.stefanosgersch.traineeship.domain.Company;
 import com.stefanosgersch.traineeship.domain.Professor;
 import com.stefanosgersch.traineeship.domain.Role;
 import com.stefanosgersch.traineeship.service.professor.ProfessorService;
+import com.stefanosgersch.traineeship.service.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProfessorController {
 
     private final ProfessorService professorService;
+    private final UserService userService;
 
-    public ProfessorController(ProfessorService professorService) {
+    public ProfessorController(ProfessorService professorService, UserService userService) {
         this.professorService = professorService;
+        this.userService = userService;
     }
 
     @RequestMapping("/dashboard")
@@ -27,30 +30,26 @@ public class ProfessorController {
 
     @RequestMapping("/profile")
     public String retrieveProfessorProfile(Model model) {
-        // bla bla
-        ProfessorDTO dto = new ProfessorDTO();
-        model.addAttribute("professorDTO", dto);
+        String username = userService.authenticateUser();
+        //ProfessorDTO dto = new ProfessorDTO();
+        model.addAttribute("professor", professorService.retrieveProfessorProfile(username));
         return "professor/profile";
     }
 
     @RequestMapping("/save_profile")
-    public String saveProfessorProfile(@ModelAttribute("professorDTO") ProfessorDTO professorDTO, Model model) {
+    public String saveProfessorProfile(@ModelAttribute("professor") Professor professor, Model model) {
         // dto to object
         // get username, password, role from session
-        Professor professor = new Professor();
-        professor.setUsername("sdgag");
-        professor.setPassword("ldsga");
-        professor.setRole(Role.PROFESSOR);
 
+        // DTO
         professorService.saveProfessorProfile(professor);
         return "professor/dashboard";
     }
 
     @RequestMapping("/supervised_traineeships")
     public String listSupervisedTraineeships(Model model) {
-        // get professor through auth
-        //
-        //model.addAllAttributes(professorService.getSupervisedPositions(profId))
+        String username = userService.authenticateUser();
+        model.addAllAttributes(professorService.retrieveAssignedPositions(username));
         return "professor/supervised_traineeships";
     }
 }
