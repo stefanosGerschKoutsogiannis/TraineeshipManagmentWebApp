@@ -1,7 +1,7 @@
 package com.stefanosgersch.traineeship.config;
 
 import com.stefanosgersch.traineeship.repository.UserRepository;
-import com.stefanosgersch.traineeship.service.user.UserServiceImpl;
+import com.stefanosgersch.traineeship.service.auth.AuthServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,7 +28,7 @@ public class WebSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserServiceImpl(userRepository, passwordEncoder());
+        return new AuthServiceImpl(userRepository, passwordEncoder());
     }
 
     @Bean

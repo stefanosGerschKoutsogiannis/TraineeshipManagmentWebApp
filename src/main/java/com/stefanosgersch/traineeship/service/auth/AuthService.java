@@ -1,9 +1,8 @@
-package com.stefanosgersch.traineeship.service.user;
+package com.stefanosgersch.traineeship.service.auth;
 
 import com.stefanosgersch.traineeship.domain.User;
-import org.springframework.stereotype.Service;
 
-public interface UserService {
+public interface AuthService {
 
     void saveUser(User user);
     boolean isUserPresent(User user);

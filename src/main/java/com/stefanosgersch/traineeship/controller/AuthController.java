@@ -1,7 +1,7 @@
 package com.stefanosgersch.traineeship.controller;
 
 import com.stefanosgersch.traineeship.domain.*;
-import com.stefanosgersch.traineeship.service.user.UserService;
+import com.stefanosgersch.traineeship.service.auth.AuthService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +13,9 @@ import java.util.Map;
 @Controller
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthService userService;
 
-    public AuthController(UserService userService) {
+    public AuthController(AuthService userService) {
         this.userService = userService;
     }
 

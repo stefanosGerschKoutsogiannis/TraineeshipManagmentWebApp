@@ -1,4 +1,4 @@
-package com.stefanosgersch.traineeship.service.user;
+package com.stefanosgersch.traineeship.service.auth;
 
 import com.stefanosgersch.traineeship.domain.User;
 import com.stefanosgersch.traineeship.repository.UserRepository;
@@ -10,16 +10,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.net.Authenticator;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class AuthServiceImpl implements AuthService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository,
+    public AuthServiceImpl(UserRepository userRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;

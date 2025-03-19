@@ -1,11 +1,8 @@
 package com.stefanosgersch.traineeship.controller;
 
-import com.stefanosgersch.traineeship.DTO.ProfessorDTO;
-import com.stefanosgersch.traineeship.domain.Company;
 import com.stefanosgersch.traineeship.domain.Professor;
-import com.stefanosgersch.traineeship.domain.Role;
 import com.stefanosgersch.traineeship.service.professor.ProfessorService;
-import com.stefanosgersch.traineeship.service.user.UserService;
+import com.stefanosgersch.traineeship.service.auth.AuthService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProfessorController {
 
     private final ProfessorService professorService;
-    private final UserService userService;
+    private final AuthService userService;
 
-    public ProfessorController(ProfessorService professorService, UserService userService) {
+    public ProfessorController(ProfessorService professorService, AuthService userService) {
         this.professorService = professorService;
         this.userService = userService;
     }
