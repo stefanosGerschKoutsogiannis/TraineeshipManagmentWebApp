@@ -6,7 +6,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @Setter
-@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -32,12 +33,4 @@ public abstract class User implements UserDetails {
             nullable = false
     )
     private Role role;
-
-    public User() {}
-    public User(String email, String username, String password, Role role) {
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
 }

@@ -27,7 +27,7 @@ public class Company extends User {
     @Column(name="company_location")
     private String companyLocation;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<TraineeshipPosition> positions;
 
     @Override

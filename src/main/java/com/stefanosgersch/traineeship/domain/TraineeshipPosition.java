@@ -61,6 +61,6 @@ public class TraineeshipPosition {
     @JoinColumn(name = "company_company_id")
     private Company company;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Evaluation> evaluations;
 }

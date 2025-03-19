@@ -12,6 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "student")
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Student extends User {
@@ -40,22 +42,6 @@ public class Student extends User {
     @OneToOne
     @JoinColumn(name = "traineeship_position_id")
     private TraineeshipPosition assignedTraineeshipPosition;
-
-    public Student() {
-        super();
-    }
-
-    public Student(String email, String username, String password, Role role, String studentName, String academicId, double averageGrade, String preferredLocation, String interests, String skills, boolean lookingForTraineeship, TraineeshipPosition assignedTraineeshipPosition) {
-        super(email, username, password, role);
-        this.studentName = studentName;
-        this.academicId = academicId;
-        this.averageGrade = averageGrade;
-        this.preferredLocation = preferredLocation;
-        this.interests = interests;
-        this.skills = skills;
-        this.lookingForTraineeship = lookingForTraineeship;
-        this.assignedTraineeshipPosition = assignedTraineeshipPosition;
-    }
 
 
     @Override

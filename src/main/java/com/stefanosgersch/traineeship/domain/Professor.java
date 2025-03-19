@@ -27,7 +27,7 @@ public class Professor extends User {
     @Column(name = "interests")
     private String interests;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<TraineeshipPosition> supervisedPositions;
 
     @Override
