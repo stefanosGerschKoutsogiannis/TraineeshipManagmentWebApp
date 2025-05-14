@@ -1,5 +1,6 @@
 package com.stefanosgersch.traineeship.controller;
 
+import com.stefanosgersch.traineeship.domain.Evaluation;
 import com.stefanosgersch.traineeship.domain.Professor;
 import com.stefanosgersch.traineeship.service.professor.ProfessorService;
 import com.stefanosgersch.traineeship.service.auth.AuthService;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/professor")
@@ -28,17 +30,12 @@ public class ProfessorController {
     @RequestMapping("/profile")
     public String retrieveProfessorProfile(Model model) {
         String username = userService.authenticateUser();
-        //ProfessorDTO dto = new ProfessorDTO();
         model.addAttribute("professor", professorService.retrieveProfessorProfile(username));
         return "professor/profile";
     }
 
     @RequestMapping("/save_profile")
     public String saveProfessorProfile(@ModelAttribute("professor") Professor professor, Model model) {
-        // dto to object
-        // get username, password, role from session
-
-        // DTO
         professorService.saveProfessorProfile(professor);
         return "professor/dashboard";
     }
@@ -46,7 +43,22 @@ public class ProfessorController {
     @RequestMapping("/supervised_traineeships")
     public String listSupervisedTraineeships(Model model) {
         String username = userService.authenticateUser();
-        model.addAllAttributes(professorService.retrieveAssignedPositions(username));
+        model.addAttribute("supervisedPositions", professorService.retrieveAssignedPositions(username));
         return "professor/supervised_traineeships";
+    }
+
+    @RequestMapping("/evaluate_position")
+    public String evaluateAssignedTraineeship(@RequestParam("position_id") Long positionId, Model model) {
+        model.addAttribute(
+                "position",
+                professorService.evaluateAssignedPosition(positionId)
+        );
+        return "professor/evaluate_position";
+    }
+
+    @RequestMapping("/save_evaluation")
+    public String saveEvaluation(@ModelAttribute("evaluation") Evaluation evaluation, Long positionId) {
+        professorService.saveEvaluation(positionId, evaluation);
+        return "professor/dashboard";
     }
 }

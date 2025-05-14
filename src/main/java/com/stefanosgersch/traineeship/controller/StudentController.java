@@ -35,19 +35,25 @@ public class StudentController {
 
     @RequestMapping("/save_profile")
     public String saveStudentProfile(@ModelAttribute("student") Student student, Model model) {
-        // dto to object
         studentService.saveStudentProfile(student);
-        return "/student/dashboard";
+        return "student/dashboard";
     }
 
     @RequestMapping("/logbook")
     public String fillLogbook(Model model) {
-        return "/student/logbook";
+        TraineeshipPosition position = studentService.getStudentTraineeshipPosition(
+                userService.authenticateUser());
+        if (position == null) {
+            model.addAttribute(
+                    "noPosition", "No traineeship position found "
+            );
+        }
+        model.addAttribute("position", position);
+        return "student/logbook";
     }
 
     @RequestMapping("/save_logbook")
     public String saveLogbook(@ModelAttribute("position")TraineeshipPosition position, Model model) {
-        studentService.saveLogbook(position);
-        return "redirect:/student/dashboard";
+        return "";
     }
 }

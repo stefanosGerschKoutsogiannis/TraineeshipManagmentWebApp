@@ -101,12 +101,17 @@
       </thead>
       <tbody>
       <tr th:each="position : ${supervisedPositions}">
-        <td th:text="${position.id}"></td>
+        <td th:text="${position.traineeshipId}"></td>
         <td th:text="${position.title}"></td>
-        <td th:text="${position.companyName}"></td>
+        <td th:text="${position.company}"></td>
         <td th:text="${position.description}"></td>
-        <td th:text="${position.startDate}"></td>
-        <td th:text="${position.endDate}"></td>
+        <td th:text="${position.fromDate}"></td>
+        <td th:text="${position.toDate}"></td>
+        <td>
+          <a th:href="@{/professor/evaluate_position(position_id=${position.traineeshipId})}" class="btn btn-secondary">
+            Evaluate
+          </a>
+        </td>
       </tr>
       </tbody>
     </table>

@@ -32,6 +32,7 @@ public class AuthController {
             return "auth/register";
         }
 
+        // remove it
         User user = createUserByType(userType);
         if (user == null) {
             model.addAttribute("errorMessage", "Invalid user type selected.");
@@ -53,19 +54,19 @@ public class AuthController {
         }
 
         user.setUsername(formData.get("username"));
-        user.setEmail(formData.get("email"));
         user.setPassword(formData.get("password"));
+
         setUserRole(user);
 
         if (userService.isUserPresent(user)) {
             // add this with if to register
-            model.addAttribute("userAlreadyRegisteredMessage", "User has already been registered.");
-            return "redirect:auth/login";
+            model.addAttribute("successMessage", "User has already been registered.");
+            return "auth/login";
         }
 
         userService.saveUser(user);
-        model.addAttribute("userRegisteredSuccessfullyMessage", "User registered successfully");
-        return "redirect:auth/login";
+        model.addAttribute("successMessage", "User registered successfully");
+        return "auth/login";
     }
 
     private User createUserByType(String userType) {

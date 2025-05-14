@@ -95,10 +95,6 @@
         <input type="text" class="form-control" th:field="*{studentName}" name="studentName" required>
       </div>
       <div class="mb-3">
-        <label class="form-label">Student email:</label>
-        <input type="text" class="form-control" th:field="*{email}" name="studentName" required>
-      </div>
-      <div class="mb-3">
         <label class="form-label">Academic ID:</label>
         <input type="text" class="form-control" th:field="*{academicId}" name="studentIdNumber" required>
       </div>
@@ -119,7 +115,7 @@
         <textarea class="form-control" th:field="*{skills}" name="skills"></textarea>
       </div>
       <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="lookingForTraineeship" name="lookingForTraineeship">
+        <input type="checkbox" class="form-check-input" id="lookingForTraineeship" th:checked="${student.lookingForTraineeship}" name="lookingForTraineeship">
         <label class="form-check-label" for="lookingForTraineeship">Looking for Traineeship?</label>
       </div>
       <button type="submit" class="btn btn-primary">Save</button>

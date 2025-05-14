@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,23 +52,6 @@
       transform: scale(1.05);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-    .password-toggle {
-      position: relative;
-    }
-    .password-toggle input[type="password"] {
-      padding-right: 40px;
-    }
-    .password-toggle .toggle-icon {
-      position: absolute;
-      top: 50%;
-      right: 10px;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 20px;
-    }
-    .mb-4 {
-      margin-bottom: 1.5rem;
-    }
   </style>
 </head>
 <body>
@@ -79,10 +62,9 @@
       <label class="form-label">Username</label>
       <input type="text" class="form-control" name="username" th:placeholder="Username" required>
     </div>
-    <div class="mb-3 password-toggle">
+    <div class="mb-3">
       <label class="form-label">Password</label>
       <input type="password" class="form-control" name="password" th:placeholder="Password" required id="passwordInput">
-      <span class="toggle-icon" id="togglePassword">👁️</span>
     </div>
     <div class="login-button-container">
       <button type="submit" class="login-button">Login</button>

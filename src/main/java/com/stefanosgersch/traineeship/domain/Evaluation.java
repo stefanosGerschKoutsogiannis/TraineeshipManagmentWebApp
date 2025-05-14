@@ -20,15 +20,8 @@ public class Evaluation {
     private Long evaluationId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
-    private EvaluationType evaluationType;  // change this
-
-    @Column(name = "motivation", nullable = false)
+    private EvaluationType evaluationType;
     private int motivation;
-
-    @Column(name = "efficiency", nullable = false)
     private int efficiency;
-
-    @Column(name = "effectiveness", nullable = false)
     private int effectiveness;
 }

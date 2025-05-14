@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,8 +93,8 @@
 </header>
 
 <main class="content">
-  <div class="welcome-header">
-    <h1>Welcome back Professor</h1>
+  <div class="welcome-header" sec:authorize="isAuthenticated()">
+    <h1>Welcome back <span sec:authentication="name"></span></h1>
   </div>
 </main>
 

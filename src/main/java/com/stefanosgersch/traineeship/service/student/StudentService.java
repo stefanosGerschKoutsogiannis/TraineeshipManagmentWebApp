@@ -8,7 +8,6 @@ public interface StudentService {
 
     Student retrieveStudentProfile(String username);
     void saveStudentProfile(Student student);
-    void applyForTraineeship(String username);
-
+    TraineeshipPosition getStudentTraineeshipPosition(String username);
     void saveLogbook(TraineeshipPosition position);
 }

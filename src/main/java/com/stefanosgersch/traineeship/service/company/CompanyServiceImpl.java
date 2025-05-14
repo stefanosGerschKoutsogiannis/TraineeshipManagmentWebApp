@@ -19,25 +19,27 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company retrieveCompanyProfile(Long companyId) {
-        return companyRepository.findById(companyId).get();
+    public Company retrieveCompanyProfile(String username) {
+        return companyRepository.findByUsername(username).get();
     }
 
+    // change like save student profile
     @Override
     public void saveCompanyProfile(Company company) {
         companyRepository.save(company);
     }
 
+    // change so it returns only positions that are not assigned
     @Override
-    public List<TraineeshipPosition> retrieveAvailablePositions(Long companyId) {
-        return companyRepository.findById(companyId)
+    public List<TraineeshipPosition> retrieveAvailablePositions(String username) {
+        return companyRepository.findByUsername(username)
                 .map(Company::getPositions)
                 .orElse(Collections.emptyList());
     }
 
     @Override
-    public List<TraineeshipPosition> retrieveAssignedPositions(Long companyId) {
-        return companyRepository.findById(companyId)
+    public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
+        return companyRepository.findByUsername(username)
                 .map(Company::getPositions)
                 .orElse(Collections.emptyList())
                 .stream()
@@ -46,17 +48,9 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void addPosition(Long companyId, TraineeshipPosition position) {
-        companyRepository.findById(companyId).ifPresent(company -> {
+    public void addPosition(String username, TraineeshipPosition position) {
+        companyRepository.findByUsername(username).ifPresent(company -> {
             company.getPositions().add(position);
-        });
-    }
-
-    @Override
-    public void deletePosition(Long companyId, TraineeshipPosition position) {
-        companyRepository.findById(companyId).ifPresent(company -> {
-            company.getPositions().remove(position);
-            companyRepository.save(company);
         });
     }
 
