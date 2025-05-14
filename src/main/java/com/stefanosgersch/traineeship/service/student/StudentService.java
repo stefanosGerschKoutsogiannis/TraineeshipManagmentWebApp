@@ -2,7 +2,6 @@ package com.stefanosgersch.traineeship.service.student;
 
 import com.stefanosgersch.traineeship.domain.Student;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
-import org.springframework.stereotype.Service;
 
 public interface StudentService {
 

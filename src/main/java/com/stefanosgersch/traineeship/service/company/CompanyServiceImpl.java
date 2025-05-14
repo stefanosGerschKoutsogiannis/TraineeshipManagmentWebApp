@@ -4,18 +4,24 @@ import com.stefanosgersch.traineeship.domain.Company;
 import com.stefanosgersch.traineeship.domain.Evaluation;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.repository.CompanyRepository;
+import com.stefanosgersch.traineeship.service.auth.AuthService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
+    private final AuthService authService;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository) {
+    public CompanyServiceImpl(CompanyRepository companyRepository,
+                              AuthService authService) {
         this.companyRepository = companyRepository;
+        this.authService = authService;
     }
 
     @Override
@@ -23,10 +29,14 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.findByUsername(username).get();
     }
 
-    // change like save student profile
+    // change like save student profile, because model returns null fields for password, etc
+    // might change the model
     @Override
     public void saveCompanyProfile(Company company) {
-        companyRepository.save(company);
+        Company savedCompany = retrieveCompanyProfile(authService.authenticateUser());
+        savedCompany.setCompanyName(company.getCompanyName());
+        savedCompany.setCompanyLocation(company.getCompanyLocation());
+        companyRepository.save(savedCompany);
     }
 
     // change so it returns only positions that are not assigned
@@ -34,7 +44,10 @@ public class CompanyServiceImpl implements CompanyService {
     public List<TraineeshipPosition> retrieveAvailablePositions(String username) {
         return companyRepository.findByUsername(username)
                 .map(Company::getPositions)
-                .orElse(Collections.emptyList());
+                .orElse(Collections.emptyList())
+                .stream()
+                .filter(position -> !position.isAssigned())
+                .collect(Collectors.toList());
     }
 
     @Override

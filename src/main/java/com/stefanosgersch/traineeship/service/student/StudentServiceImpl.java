@@ -29,16 +29,16 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void saveStudentProfile(Student student) {
-        Student saved_student = retrieveStudentProfile(authService.authenticateUser());
-        saved_student.setStudentName(student.getStudentName());
-        saved_student.setAcademicId(student.getAcademicId());
-        saved_student.setLookingForTraineeship(student.isLookingForTraineeship());
-        saved_student.setInterests(student.getInterests());
-        saved_student.setSkills(student.getSkills());
-        saved_student.setAverageGrade(student.getAverageGrade());
-        saved_student.setPreferredLocation(student.getPreferredLocation());
+        Student savedStudent = retrieveStudentProfile(authService.authenticateUser());
+        savedStudent.setStudentName(student.getStudentName());
+        savedStudent.setAcademicId(student.getAcademicId());
+        savedStudent.setLookingForTraineeship(student.isLookingForTraineeship());
+        savedStudent.setInterests(student.getInterests());
+        savedStudent.setSkills(student.getSkills());
+        savedStudent.setAverageGrade(student.getAverageGrade());
+        savedStudent.setPreferredLocation(student.getPreferredLocation());
 
-        studentRepository.save(saved_student);
+        studentRepository.save(savedStudent);
     }
 
     @Override
@@ -50,7 +50,6 @@ public class StudentServiceImpl implements StudentService {
         return null;
     }
 
-    // if no traineeship, throw something else
     @Override
     public void saveLogbook(TraineeshipPosition position) {
         TraineeshipPosition saved_position = traineeshipPositionRepository.findById(position.getTraineeshipId()).get();
