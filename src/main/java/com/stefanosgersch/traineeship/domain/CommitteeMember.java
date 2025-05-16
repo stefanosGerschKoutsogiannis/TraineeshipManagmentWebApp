@@ -15,8 +15,7 @@ import java.util.Collections;
 @NoArgsConstructor
 @Entity
 @Table(name = "committee")
-@PrimaryKeyJoinColumn(name = "committee_id")
+@PrimaryKeyJoinColumn(name = "committee_username")
 public class CommitteeMember extends User {
-
 
 }

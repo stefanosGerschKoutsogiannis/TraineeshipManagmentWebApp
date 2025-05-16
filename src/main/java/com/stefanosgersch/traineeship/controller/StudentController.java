@@ -54,6 +54,7 @@ public class StudentController {
 
     @RequestMapping("/save_logbook")
     public String saveLogbook(@ModelAttribute("position")TraineeshipPosition position, Model model) {
-        return "";
+        studentService.saveLogbook(position);
+        return "student/dashboard";
     }
 }

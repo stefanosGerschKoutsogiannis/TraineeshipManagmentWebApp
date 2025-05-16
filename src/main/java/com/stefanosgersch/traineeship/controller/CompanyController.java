@@ -1,6 +1,7 @@
 package com.stefanosgersch.traineeship.controller;
 
 import com.stefanosgersch.traineeship.domain.Company;
+import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.service.auth.AuthService;
 import com.stefanosgersch.traineeship.service.company.CompanyService;
 import org.springframework.stereotype.Controller;
@@ -56,5 +57,18 @@ public class CompanyController {
                 companyService.retrieveAssignedPositions(authService.authenticateUser())
         );
         return "company/assigned_positions";
+    }
+
+    @RequestMapping("/add_position")
+    public String showPositionForm(Model model) {
+        model.addAttribute("position", new TraineeshipPosition());
+        return "company/position_form";
+    }
+
+    // does not persist in the databae
+    @RequestMapping("/save_position")
+    public String savePosition(@ModelAttribute("position") TraineeshipPosition position) {
+        companyService.addPosition(authService.authenticateUser(), position);
+        return "company/dashboard";
     }
 }

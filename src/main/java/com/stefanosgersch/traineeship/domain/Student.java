@@ -3,15 +3,16 @@ package com.stefanosgersch.traineeship.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "student")
-@PrimaryKeyJoinColumn(name = "student_id")
+@PrimaryKeyJoinColumn(name = "student_username")
 public class Student extends User {
-
 
     private String studentName;
     private String academicId;
@@ -21,7 +22,6 @@ public class Student extends User {
     private String skills;
     private boolean lookingForTraineeship;
 
-    @OneToOne
-    @JoinColumn(name = "traineeship_position_id")
+    @OneToOne(mappedBy = "student")
     private TraineeshipPosition assignedTraineeshipPosition;
 }

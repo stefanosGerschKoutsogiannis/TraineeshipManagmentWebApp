@@ -14,16 +14,14 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "professor")
-@PrimaryKeyJoinColumn(name = "professor_id")
-public class Professor extends User {
+@PrimaryKeyJoinColumn(name = "professor_username")
+public class Professor  extends User {
 
-    @Column(name = "professor_name")
     private String professorName;
 
-    @Column(name = "interests")
     private String interests;
 
-    @OneToMany()
+    @OneToMany(mappedBy = "supervisor")
     private List<TraineeshipPosition> supervisedPositions;
 
 }

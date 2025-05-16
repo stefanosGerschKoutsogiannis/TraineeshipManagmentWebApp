@@ -4,6 +4,7 @@ import com.stefanosgersch.traineeship.domain.*;
 import com.stefanosgersch.traineeship.service.auth.AuthService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,6 +25,25 @@ public class AuthController {
         return "auth/login";
     }
 
+    /*
+    @RequestMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("user", new User());
+        return "auth/register";
+    }
+
+    @RequestMapping("/save")
+    public String registerUser(@ModelAttribute("user") User user, Model model) {
+        if (userService.isUserPresent(user)) {
+            model.addAttribute("successMessage", "User already exists");
+            return "auth/register";
+        }
+
+        userService.saveUser(user);
+        model.addAttribute("successMessage", "User registered successfully");
+        return "auth/login";
+    }
+    */
 
     @RequestMapping("/register")
     public String register(@RequestParam(value = "userType", required = false) String userType, Model model) {
@@ -95,4 +115,5 @@ public class AuthController {
             user.setRole(Role.PROFESSOR);
         }
     }
+
 }

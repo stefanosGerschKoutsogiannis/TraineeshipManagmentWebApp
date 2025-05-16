@@ -15,12 +15,16 @@ import lombok.Setter;
 public class Evaluation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long evaluationId;
 
     @Enumerated(EnumType.STRING)
     private EvaluationType evaluationType;
+
+    @ManyToOne
+    @JoinColumn(name = "traineeship_id")
+    private TraineeshipPosition position;
+
     private int motivation;
     private int efficiency;
     private int effectiveness;

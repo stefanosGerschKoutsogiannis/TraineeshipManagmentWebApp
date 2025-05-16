@@ -39,15 +39,15 @@ public class CompanyServiceImpl implements CompanyService {
         companyRepository.save(savedCompany);
     }
 
-    // change so it returns only positions that are not assigned
     @Override
     public List<TraineeshipPosition> retrieveAvailablePositions(String username) {
-        return companyRepository.findByUsername(username)
+        List<TraineeshipPosition> positions = companyRepository.findByUsername(username)
                 .map(Company::getPositions)
                 .orElse(Collections.emptyList())
                 .stream()
                 .filter(position -> !position.isAssigned())
                 .collect(Collectors.toList());
+        return positions;
     }
 
     @Override
@@ -56,15 +56,16 @@ public class CompanyServiceImpl implements CompanyService {
                 .map(Company::getPositions)
                 .orElse(Collections.emptyList())
                 .stream()
-                .filter(TraineeshipPosition::isAssigned)
+                .filter(position -> position.isAssigned())
                 .toList();
     }
 
+    // problem storing Traineeship at database
     @Override
     public void addPosition(String username, TraineeshipPosition position) {
-        companyRepository.findByUsername(username).ifPresent(company -> {
-            company.getPositions().add(position);
-        });
+        Company company = retrieveCompanyProfile(username);
+        position.setCompany(company);
+        company.getPositions().add(position);
     }
 
     @Override

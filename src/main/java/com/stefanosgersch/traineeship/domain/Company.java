@@ -14,12 +14,13 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "company")
-@PrimaryKeyJoinColumn(name = "company_id")
+@PrimaryKeyJoinColumn(name = "company_username")
 public class Company extends User {
+
 
     private String companyName;
     private String companyLocation;
 
-    @OneToMany()
+    @OneToMany(mappedBy = "company")
     private List<TraineeshipPosition> positions;
 }
