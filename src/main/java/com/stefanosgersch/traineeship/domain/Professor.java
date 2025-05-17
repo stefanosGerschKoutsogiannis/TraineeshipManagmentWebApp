@@ -21,7 +21,7 @@ public class Professor  extends User {
 
     private String interests;
 
-    @OneToMany(mappedBy = "supervisor")
+    @OneToMany(mappedBy = "supervisor", cascade = CascadeType.ALL)
     private List<TraineeshipPosition> supervisedPositions;
 
 }

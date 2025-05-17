@@ -1,10 +1,7 @@
 package com.stefanosgersch.traineeship.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -14,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "traineeship_position")
 public class TraineeshipPosition {
@@ -49,6 +47,6 @@ public class TraineeshipPosition {
     @JoinColumn(name = "company_username")
     private Company company;
 
-    @OneToMany(mappedBy = "position")
+    @OneToMany(mappedBy = "position", cascade = CascadeType.ALL)
     private List<Evaluation> evaluations;
 }

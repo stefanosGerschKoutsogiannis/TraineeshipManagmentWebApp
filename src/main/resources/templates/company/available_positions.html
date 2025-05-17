@@ -97,7 +97,6 @@
       <tr>
         <th>ID</th>
         <th>Title</th>
-        <th>Company</th>
         <th>Description</th>
         <th>Start Date</th>
         <th>End Date</th>
@@ -107,7 +106,6 @@
       <tr th:each="position : ${available_positions}">
         <td th:text="${position.traineeshipId}"></td>
         <td th:text="${position.title}"></td>
-        <td th:text="${position.company}"></td>
         <td th:text="${position.description}"></td>
         <td th:text="${position.fromDate}"></td>
         <td th:text="${position.toDate}"></td>

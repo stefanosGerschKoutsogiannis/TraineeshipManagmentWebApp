@@ -65,10 +65,17 @@ public class CompanyController {
         return "company/position_form";
     }
 
-    // does not persist in the databae
     @RequestMapping("/save_position")
     public String savePosition(@ModelAttribute("position") TraineeshipPosition position) {
+        System.out.println(position.toString());
         companyService.addPosition(authService.authenticateUser(), position);
         return "company/dashboard";
     }
+
+    @RequestMapping("/evaluate_position")
+    public String evaluateAssignedPosition(@ModelAttribute("position_id") Long positionId, Model model) {
+        return "company/evaluate_position";
+    }
+
+
 }

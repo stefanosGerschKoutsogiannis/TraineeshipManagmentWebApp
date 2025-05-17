@@ -22,6 +22,6 @@ public class Student extends User {
     private String skills;
     private boolean lookingForTraineeship;
 
-    @OneToOne(mappedBy = "student")
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private TraineeshipPosition assignedTraineeshipPosition;
 }

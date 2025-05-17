@@ -89,5 +89,45 @@
         </div>
     </nav>
 </header>
+
+<main class="content">
+    <div class="table-container">
+        <h2>Assigned Positions</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Student</th>
+                <th>Supervisor</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="position : ${assigned_positions}">
+                <td th:text="${position.traineeshipId}"></td>
+                <td th:text="${position.title}"></td>
+                <td th:text="${position.description}"></td>
+                <td th:text="${position.student.studentName}"></td>
+                <td th:text="${position.supervisor.professorName}"></td>
+                <td th:text="${position}"></td>
+                <td th:text="${position.fromDate}"></td>
+                <td th:text="${position.toDate}"></td>
+                <td>
+                    <a th:href="@{/evaluate}"></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer class="footer">
+    <p>University of Ioannina 2025</p>
+</footer>
+
 </body>
 </html>

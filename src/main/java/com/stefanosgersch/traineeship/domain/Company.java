@@ -1,10 +1,7 @@
 package com.stefanosgersch.traineeship.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -21,6 +18,6 @@ public class Company extends User {
     private String companyName;
     private String companyLocation;
 
-    @OneToMany(mappedBy = "company")
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
     private List<TraineeshipPosition> positions;
 }

@@ -2,8 +2,10 @@ package com.stefanosgersch.traineeship.service.company;
 
 import com.stefanosgersch.traineeship.domain.Company;
 import com.stefanosgersch.traineeship.domain.Evaluation;
+import com.stefanosgersch.traineeship.domain.EvaluationType;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.repository.CompanyRepository;
+import com.stefanosgersch.traineeship.repository.TraineeshipPositionRepository;
 import com.stefanosgersch.traineeship.service.auth.AuthService;
 import org.springframework.stereotype.Service;
 
@@ -64,13 +66,21 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void addPosition(String username, TraineeshipPosition position) {
         Company company = retrieveCompanyProfile(username);
-        position.setCompany(company);
-        company.getPositions().add(position);
+        position.setCompany(company);   // set the position's company to company
+        company.getPositions().add(position);   // add the position
+        companyRepository.save(company);
     }
 
     @Override
     public void evaluateAssignedPosition(Long positionId) {
-        return;
+        Company company = retrieveCompanyProfile(authService.authenticateUser());
+        TraineeshipPosition traineeshipPosition = (TraineeshipPosition) company.getPositions()
+                .stream()
+                .filter(position -> position.getTraineeshipId().equals(positionId));
+        Evaluation evaluation = new Evaluation();
+        evaluation.setEvaluationType(EvaluationType.COMPANY);
+        traineeshipPosition.getEvaluations().add(evaluation);
+        companyRepository.save(company);
     }
 
     @Override
