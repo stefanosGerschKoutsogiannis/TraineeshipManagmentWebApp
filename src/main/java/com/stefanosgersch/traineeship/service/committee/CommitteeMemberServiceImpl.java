@@ -49,11 +49,9 @@ public class CommitteeMemberServiceImpl implements CommitteeMemberService {
     @Override
     public void assignPosition(Long positionId, String studentUsername) {
         studentRepository.findByUsername(studentUsername).ifPresent(student -> {
-            traineeshipPositionRepository.findById(positionId).ifPresent(traineeshipPosition -> {
-                if (!traineeshipPosition.isAssigned()) {
-                    assignPositionToStudent(student, traineeshipPosition);
-                }
-            });
+          student.setLookingForTraineeship(false);
+          student.setAssignedTraineeshipPosition(traineeshipPositionRepository.findById(positionId).get());
+          studentRepository.save(student);
         });
     }
 
@@ -76,15 +74,5 @@ public class CommitteeMemberServiceImpl implements CommitteeMemberService {
                 .stream()
                 .filter(TraineeshipPosition::isAssigned)
                 .toList();
-    }
-
-    private void assignPositionToStudent(Student student, TraineeshipPosition traineeshipPosition) {
-        student.setLookingForTraineeship(false);
-        student.setAssignedTraineeshipPosition(traineeshipPosition);
-        traineeshipPosition.setStudent(student);
-        traineeshipPosition.setAssigned(true);
-
-        traineeshipPositionRepository.save(traineeshipPosition);
-        studentRepository.save(student);
     }
 }
