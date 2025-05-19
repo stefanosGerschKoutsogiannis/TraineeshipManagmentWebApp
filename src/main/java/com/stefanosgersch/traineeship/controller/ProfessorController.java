@@ -47,18 +47,15 @@ public class ProfessorController {
         return "professor/supervised_traineeships";
     }
 
-    @RequestMapping("/evaluate_position")
+    @RequestMapping("/supervised_traineeships/evaluate_position")
     public String evaluateAssignedTraineeship(@RequestParam("position_id") Long positionId, Model model) {
-        model.addAttribute(
-                "position",
-                professorService.evaluateAssignedPosition(positionId)
-        );
+        // TODO: implement it
         return "professor/evaluate_position";
     }
 
     @RequestMapping("/save_evaluation")
     public String saveEvaluation(@ModelAttribute("evaluation") Evaluation evaluation, Long positionId) {
-        professorService.saveEvaluation(positionId, evaluation);
+        // TODO: implement it
         return "professor/dashboard";
     }
 }

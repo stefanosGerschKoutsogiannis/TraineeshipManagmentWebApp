@@ -1,6 +1,7 @@
 package com.stefanosgersch.traineeship.service.professor;
 
 import com.stefanosgersch.traineeship.domain.Evaluation;
+import com.stefanosgersch.traineeship.domain.EvaluationType;
 import com.stefanosgersch.traineeship.domain.Professor;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.repository.ProfessorRepository;
@@ -41,15 +42,13 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public TraineeshipPosition evaluateAssignedPosition(Long positionId) {
-        return (TraineeshipPosition) retrieveAssignedPositions(authService.authenticateUser())
-                .stream()
-                .filter(position -> position.getTraineeshipId().equals(positionId));
+    public void evaluateAssignedPosition(Long positionId) {
+        // TODO: implement it
     }
 
     @Override
     public void saveEvaluation(Long positionId, Evaluation evaluation) {
-        evaluateAssignedPosition(positionId).getEvaluations().add(evaluation);
+        //TODO: implement it
     }
 
 

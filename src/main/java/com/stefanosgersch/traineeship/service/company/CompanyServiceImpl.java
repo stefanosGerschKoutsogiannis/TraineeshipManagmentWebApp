@@ -2,14 +2,11 @@ package com.stefanosgersch.traineeship.service.company;
 
 import com.stefanosgersch.traineeship.domain.Company;
 import com.stefanosgersch.traineeship.domain.Evaluation;
-import com.stefanosgersch.traineeship.domain.EvaluationType;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.repository.CompanyRepository;
-import com.stefanosgersch.traineeship.repository.TraineeshipPositionRepository;
 import com.stefanosgersch.traineeship.service.auth.AuthService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,7 +59,6 @@ public class CompanyServiceImpl implements CompanyService {
                 .toList();
     }
 
-    // problem storing Traineeship at database
     @Override
     public void addPosition(String username, TraineeshipPosition position) {
         Company company = retrieveCompanyProfile(username);
@@ -73,19 +69,12 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void evaluateAssignedPosition(Long positionId) {
-        Company company = retrieveCompanyProfile(authService.authenticateUser());
-        TraineeshipPosition traineeshipPosition = (TraineeshipPosition) company.getPositions()
-                .stream()
-                .filter(position -> position.getTraineeshipId().equals(positionId));
-        Evaluation evaluation = new Evaluation();
-        evaluation.setEvaluationType(EvaluationType.COMPANY);
-        traineeshipPosition.getEvaluations().add(evaluation);
-        companyRepository.save(company);
+        // TODO: implement it
     }
 
     @Override
     public void saveEvaluation(Long positionId, Evaluation evaluation) {
-        return;
+        // TODO: implement it
     }
 
 

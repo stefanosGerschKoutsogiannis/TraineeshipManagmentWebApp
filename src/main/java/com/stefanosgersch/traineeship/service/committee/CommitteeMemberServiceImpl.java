@@ -38,14 +38,7 @@ public class CommitteeMemberServiceImpl implements CommitteeMemberService {
                 .filter(Student::isLookingForTraineeship)
                 .toList();
     }
-
-    /**
-     * 1. find student and set lookingForTraineeship to false
-     * 2. assign the traineeship to the student
-     * 3. update traineeship student
-     * 3. save the student*
-     * might face a problem, must throw something back
-     */
+    // store also traineeship position student, or will it cascade?
     @Override
     public void assignPosition(Long positionId, String studentUsername) {
         studentRepository.findByUsername(studentUsername).ifPresent(student -> {

@@ -67,15 +67,17 @@ public class CompanyController {
 
     @RequestMapping("/save_position")
     public String savePosition(@ModelAttribute("position") TraineeshipPosition position) {
-        System.out.println(position.toString());
         companyService.addPosition(authService.authenticateUser(), position);
         return "company/dashboard";
     }
 
     @RequestMapping("/evaluate_position")
     public String evaluateAssignedPosition(@ModelAttribute("position_id") Long positionId, Model model) {
+        // TODO: implement it
         return "company/evaluate_position";
     }
+
+    // TODO: implement evaluation save
 
 
 }

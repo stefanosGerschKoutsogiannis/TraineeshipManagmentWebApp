@@ -27,6 +27,7 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findByUsername(username).get();
     }
 
+    // bad code, refactor sending DTOs or add every field ass hidden(bad patch)
     @Override
     public void saveStudentProfile(Student student) {
         Student savedStudent = retrieveStudentProfile(authService.authenticateUser());
@@ -52,9 +53,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void saveLogbook(TraineeshipPosition position) {
-        TraineeshipPosition saved_position = traineeshipPositionRepository.findById(position.getTraineeshipId()).get();
-        saved_position.setStudentLogbook(position.getStudentLogbook());
-        traineeshipPositionRepository.save(saved_position);
+        TraineeshipPosition savedPosition = traineeshipPositionRepository.findById(position.getTraineeshipId()).get();
+        savedPosition.setStudentLogbook(position.getStudentLogbook());
+        traineeshipPositionRepository.save(savedPosition);
     }
 
 }

@@ -12,7 +12,7 @@ public interface ProfessorService {
     Professor retrieveProfessorProfile(String username);
     void saveProfessorProfile(Professor professor);
     List<TraineeshipPosition> retrieveAssignedPositions(String username);
-    TraineeshipPosition evaluateAssignedPosition(Long positionId);
+    void evaluateAssignedPosition(Long positionId);
     void saveEvaluation(Long positionId, Evaluation evaluation);
 
 }
