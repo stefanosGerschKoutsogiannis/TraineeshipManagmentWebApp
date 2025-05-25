@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/student")
@@ -53,8 +54,13 @@ public class StudentController {
     }
 
     @RequestMapping("/save_logbook")
-    public String saveLogbook(@ModelAttribute("position")TraineeshipPosition position, Model model) {
-        studentService.saveLogbook(position);
+    public String saveLogbook(@RequestParam("studentLogbook") String studentLogbook) {
+        String username = userService.authenticateUser();
+        TraineeshipPosition position = studentService.getStudentTraineeshipPosition(username);
+        if (position != null) {
+            position.setStudentLogbook(studentLogbook);
+            studentService.saveLogbook(position);
+        }
         return "student/dashboard";
     }
 }

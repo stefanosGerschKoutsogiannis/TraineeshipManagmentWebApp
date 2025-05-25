@@ -1,6 +1,8 @@
 package com.stefanosgersch.traineeship.controller;
 
 import com.stefanosgersch.traineeship.domain.Company;
+import com.stefanosgersch.traineeship.domain.Evaluation;
+import com.stefanosgersch.traineeship.domain.EvaluationType;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.service.auth.AuthService;
 import com.stefanosgersch.traineeship.service.company.CompanyService;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/company")
@@ -73,11 +76,28 @@ public class CompanyController {
 
     @RequestMapping("/evaluate_position")
     public String evaluateAssignedPosition(@ModelAttribute("position_id") Long positionId, Model model) {
-        // TODO: implement it
+        TraineeshipPosition position = companyService.evaluateAssignedPosition(positionId);
+        if (position == null) {
+            model.addAttribute("alreadyEvaluated", true);
+            return "company/evaluate_position";
+        }
+        model.addAttribute("position", position);
+        model.addAttribute("evaluation", new Evaluation());
         return "company/evaluate_position";
     }
 
-    // TODO: implement evaluation save
+    @RequestMapping("/save_evaluation")
+    public String saveEvaluation(@ModelAttribute("evaluation") Evaluation evaluation, @ModelAttribute("position_id") Long positionId) {
+        evaluation.setEvaluationType(EvaluationType.COMPANY);
+        companyService.saveEvaluation(positionId, evaluation);
+        return "company/dashboard";
+    }
+
+    @RequestMapping("/delete_position")
+    public String deletePosition(@RequestParam("position_id") Long positionId) {
+        companyService.deletePosition(authService.authenticateUser(), positionId);
+        return "company/dashboard";
+    }
 
 
 }

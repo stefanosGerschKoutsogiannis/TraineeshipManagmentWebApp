@@ -92,6 +92,7 @@
 <main class="content">
   <div class="table-container">
     <h2>Available Positions</h2>
+
     <table class="table table-striped">
       <thead>
       <tr>
@@ -100,6 +101,7 @@
         <th>Description</th>
         <th>Start Date</th>
         <th>End Date</th>
+        <th>Actions</th>
       </tr>
       </thead>
       <tbody>
@@ -109,6 +111,12 @@
         <td th:text="${position.description}"></td>
         <td th:text="${position.fromDate}"></td>
         <td th:text="${position.toDate}"></td>
+        <td>
+          <form th:action="@{/company/delete_position(position_id=${position.traineeshipId})}" 
+                method="post" 
+                style="display: inline;"> <!-- lol -->
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
         </td>
       </tr>
       </tbody>

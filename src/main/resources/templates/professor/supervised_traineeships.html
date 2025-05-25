@@ -57,6 +57,11 @@
     .logout-button {
       margin-left: auto; /* Push logout button to the right */
     }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+    }
   </style>
 </head>
 <body>
@@ -97,20 +102,23 @@
         <th>Description</th>
         <th>Start Date</th>
         <th>End Date</th>
+        <th>Actions</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="position : ${supervisedPositions}">
         <td th:text="${position.traineeshipId}"></td>
         <td th:text="${position.title}"></td>
-        <td th:text="${position.company}"></td>
+        <td th:text="${position.company.companyName}"></td>
         <td th:text="${position.description}"></td>
         <td th:text="${position.fromDate}"></td>
         <td th:text="${position.toDate}"></td>
         <td>
-          <a th:href="@{/professor/supervised_traineeships/evaluate_position(position_id=${position.traineeshipId})}" class="btn btn-secondary">
-            Evaluate
-          </a>
+          <div class="btn-group">
+            <a th:href="@{/professor/supervised_traineeships/evaluate_position(position_id=${position.traineeshipId})}" class="btn btn-primary">
+              Evaluate
+            </a>
+          </div>
         </td>
       </tr>
       </tbody>

@@ -45,6 +45,15 @@ public class AssignmentBasedOnInterests implements SupervisorAssignmentStrategy 
             }
         });
 
+        // If no professors meet the threshold, find the one with highest similarity anyway
+        if (filteredProfessors.isEmpty()) {
+            professors.forEach(professor -> {
+                Set<String> professorInterests = Set.of(professor.getInterests().toLowerCase().split(","));
+                double similarity = calculateJaccardSimilarity(professorInterests, traineeshipTopics);
+                filteredProfessors.put(professor, similarity);
+            });
+        }
+
         return Collections.max(filteredProfessors.entrySet(), Map.Entry.comparingByValue()).getKey();
     }
 }

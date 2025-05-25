@@ -1,7 +1,9 @@
 package com.stefanosgersch.traineeship.controller;
 
 import com.stefanosgersch.traineeship.domain.Evaluation;
+import com.stefanosgersch.traineeship.domain.EvaluationType;
 import com.stefanosgersch.traineeship.domain.Professor;
+import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.service.professor.ProfessorService;
 import com.stefanosgersch.traineeship.service.auth.AuthService;
 import org.springframework.stereotype.Controller;
@@ -29,13 +31,14 @@ public class ProfessorController {
 
     @RequestMapping("/profile")
     public String retrieveProfessorProfile(Model model) {
-        String username = userService.authenticateUser();
-        model.addAttribute("professor", professorService.retrieveProfessorProfile(username));
+        model.addAttribute("professor",
+                professorService.retrieveProfessorProfile(userService.authenticateUser())
+        );
         return "professor/profile";
     }
 
     @RequestMapping("/save_profile")
-    public String saveProfessorProfile(@ModelAttribute("professor") Professor professor, Model model) {
+    public String saveProfessorProfile(@ModelAttribute("professor") Professor professor) {
         professorService.saveProfessorProfile(professor);
         return "professor/dashboard";
     }
@@ -49,13 +52,20 @@ public class ProfessorController {
 
     @RequestMapping("/supervised_traineeships/evaluate_position")
     public String evaluateAssignedTraineeship(@RequestParam("position_id") Long positionId, Model model) {
-        // TODO: implement it
+        TraineeshipPosition position = professorService.evaluateAssignedPosition(positionId);
+        if (position == null) {
+            model.addAttribute("alreadyEvaluated", true);
+            return "professor/evaluate_position";
+        }
+        model.addAttribute("position", position);
+        model.addAttribute("evaluation", new Evaluation());
         return "professor/evaluate_position";
     }
 
     @RequestMapping("/save_evaluation")
-    public String saveEvaluation(@ModelAttribute("evaluation") Evaluation evaluation, Long positionId) {
-        // TODO: implement it
+    public String saveEvaluation(@ModelAttribute("evaluation") Evaluation evaluation, @RequestParam("position_id") Long positionId) {
+        evaluation.setEvaluationType(EvaluationType.PROFESSOR);
+        professorService.saveEvaluation(positionId, evaluation);
         return "professor/dashboard";
     }
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Committee Dashboard</title>
+    <title>Assigned Traineeships</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -12,55 +12,62 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #f8f9fa; /* Light background */
-            color: #333; /* Darker text */
+            background-color: #f8f9fa;
+            color: #333;
         }
 
         .header, .footer {
-            background-color: #1976d2; /* Darker blue header/footer */
+            background-color: #1976d2;
             padding: 20px;
             text-align: center;
-            color: white; /* White text in header/footer */
+            color: white;
         }
 
         .content {
             flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             padding: 20px;
         }
 
-        .welcome-header h1 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            color: #495057; /* Slightly lighter dark text */
-        }
-
         .footer {
-            margin-top: auto; /* Push footer to bottom */
+            margin-top: auto;
         }
 
         .navbar-brand, .nav-link {
-            color: white !important; /* White navbar text */
+            color: white !important;
         }
 
         .navbar-brand:hover, .nav-link:hover {
-            color: #e0e0e0 !important; /* Slightly lighter white on hover */
+            color: #e0e0e0 !important;
         }
 
         .navbar {
-            background-color: #1976d2; /* Darker blue navbar background */
+            background-color: #1976d2;
         }
 
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
 
-        .logout-button {
-            margin-left: auto; /* Push logout button to the right */
+        .table-container {
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
 
+        .logout-button {
+            margin-left: auto;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .strategy-select {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -90,8 +97,43 @@
 </header>
 
 <main class="content">
-    <div class="welcome-header" sec:authorize="isAuthenticated()">
-        <h1>Welcome back <span sec:authentication="name"></span></h1>
+    <div class="table-container">
+        <h2>Assigned Traineeships</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Student</th>
+                <th>Supervisor</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="position : ${assigned_positions}">
+                <td th:text="${position.traineeshipId}"></td>
+                <td th:text="${position.title}"></td>
+                <td th:text="${position.company.companyName}"></td>
+                <td th:text="${position.student.studentName}"></td>
+                <td th:text="${position.supervisor != null ? position.supervisor.professorName : 'Not Assigned'}"></td>
+                <td th:text="${position.fromDate}"></td>
+                <td th:text="${position.toDate}"></td>
+                <td>
+                    <form th:action="@{/committee/assign_supervisor}" method="get" class="d-inline">
+                        <input type="hidden" name="position_id" th:value="${position.traineeshipId}">
+                        <select name="strategy" class="form-select strategy-select">
+                            <option value="interests">Based on Interests</option>
+                            <option value="load">Based on Load</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Assign Supervisor</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </main>
 
@@ -101,4 +143,4 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+</html> 

@@ -2,12 +2,14 @@ package com.stefanosgersch.traineeship.service.committee;
 
 import com.stefanosgersch.traineeship.domain.Student;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
+import com.stefanosgersch.traineeship.domain.Professor;
 import com.stefanosgersch.traineeship.domain.position_search.PositionSearchFactory;
 import com.stefanosgersch.traineeship.domain.position_search.PositionSearchStrategy;
 import com.stefanosgersch.traineeship.domain.supervisor_assignment.SupervisorAssignmentFactory;
 import com.stefanosgersch.traineeship.domain.supervisor_assignment.SupervisorAssignmentStrategy;
 import com.stefanosgersch.traineeship.repository.StudentRepository;
 import com.stefanosgersch.traineeship.repository.TraineeshipPositionRepository;
+import com.stefanosgersch.traineeship.repository.ProfessorRepository;
 import org.springframework.stereotype.Service;
 
 
@@ -20,15 +22,18 @@ public class CommitteeMemberServiceImpl implements CommitteeMemberService {
     private final TraineeshipPositionRepository traineeshipPositionRepository;
     private final SupervisorAssignmentFactory supervisorAssignmentFactory;
     private final PositionSearchFactory positionSearchFactory;
+    private final ProfessorRepository professorRepository;
 
     public CommitteeMemberServiceImpl(StudentRepository studentRepository,
                                       TraineeshipPositionRepository traineeshipPositionRepository,
                                       SupervisorAssignmentFactory supervisorAssignmentFactory,
-                                      PositionSearchFactory positionSearchFactory) {
+                                      PositionSearchFactory positionSearchFactory,
+                                      ProfessorRepository professorRepository) {
         this.studentRepository = studentRepository;
         this.traineeshipPositionRepository = traineeshipPositionRepository;
         this.supervisorAssignmentFactory = supervisorAssignmentFactory;
         this.positionSearchFactory = positionSearchFactory;
+        this.professorRepository = professorRepository;
     }
 
     @Override
@@ -42,16 +47,32 @@ public class CommitteeMemberServiceImpl implements CommitteeMemberService {
     @Override
     public void assignPosition(Long positionId, String studentUsername) {
         studentRepository.findByUsername(studentUsername).ifPresent(student -> {
-          student.setLookingForTraineeship(false);
-          student.setAssignedTraineeshipPosition(traineeshipPositionRepository.findById(positionId).get());
-          studentRepository.save(student);
+            TraineeshipPosition position = traineeshipPositionRepository.findById(positionId)
+                .orElseThrow(() -> new RuntimeException("Position not found"));
+            
+            student.setLookingForTraineeship(false);
+            student.setAssignedTraineeshipPosition(position);
+            position.setAssigned(true);
+            position.setStudent(student);
+            
+            studentRepository.save(student);
+            traineeshipPositionRepository.save(position);
         });
     }
 
     @Override
     public void assignSupervisor(Long positionId, String strategy) {
         SupervisorAssignmentStrategy supervisorStrategy = supervisorAssignmentFactory.create(strategy);
-        supervisorStrategy.assignProfessor(positionId);
+        Professor assignedProfessor = supervisorStrategy.assignProfessor(positionId);
+        
+        TraineeshipPosition position = traineeshipPositionRepository.findById(positionId)
+            .orElseThrow(() -> new RuntimeException("Position not found"));
+        
+        position.setSupervisor(assignedProfessor);
+        assignedProfessor.getSupervisedPositions().add(position);
+        
+        traineeshipPositionRepository.save(position);
+        professorRepository.save(assignedProfessor);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.stefanosgersch.traineeship.service.company;
 
 import com.stefanosgersch.traineeship.domain.Company;
 import com.stefanosgersch.traineeship.domain.Evaluation;
+import com.stefanosgersch.traineeship.domain.EvaluationType;
 import com.stefanosgersch.traineeship.domain.TraineeshipPosition;
 import com.stefanosgersch.traineeship.repository.CompanyRepository;
 import com.stefanosgersch.traineeship.service.auth.AuthService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,14 +70,62 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void evaluateAssignedPosition(Long positionId) {
-        // TODO: implement it
+    public TraineeshipPosition evaluateAssignedPosition(Long positionId) {
+        TraineeshipPosition positionToEval = retrieveAssignedPositions(authService.authenticateUser())
+                .stream()
+                .filter(position -> position.getTraineeshipId().equals(positionId))
+                .findFirst().get();
+        if (isEvaluated(positionToEval)) {
+            return null;
+        }
+        return positionToEval;
+    }
+
+    private boolean isEvaluated(TraineeshipPosition position) {
+        Optional<Evaluation> companyEvaluation = position.getEvaluations()
+                .stream()
+                .filter(evaluation -> evaluation.getEvaluationType().equals(EvaluationType.COMPANY))
+                .findFirst();
+        if (companyEvaluation.isPresent()) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void saveEvaluation(Long positionId, Evaluation evaluation) {
-        // TODO: implement it
+        TraineeshipPosition position = companyRepository.findAll().stream()
+                .flatMap(company -> company.getPositions().stream())
+                .filter(p -> p.getTraineeshipId().equals(positionId))
+                .findFirst()
+                .get();
+        
+        evaluation.setPosition(position);
+        position.getEvaluations().add(evaluation);
+        companyRepository.save(position.getCompany());
     }
 
+    @Override
+    public void deletePosition(String username, Long positionId) {
+        Company company = retrieveCompanyProfile(username);
+        TraineeshipPosition positionToDelete = company.getPositions().stream()
+                .filter(position -> position.getTraineeshipId().equals(positionId))
+                .findFirst().get();
+
+        // Remove position from company's list
+        company.getPositions().remove(positionToDelete);
+        
+        // Clear any existing evaluations
+        if (positionToDelete.getEvaluations() != null) {
+            positionToDelete.getEvaluations().clear();
+        }
+        
+        // Clear any existing student or supervisor references
+        positionToDelete.setStudent(null);
+        positionToDelete.setSupervisor(null);
+        
+        // Save the changes
+        companyRepository.save(company);
+    }
 
 }
