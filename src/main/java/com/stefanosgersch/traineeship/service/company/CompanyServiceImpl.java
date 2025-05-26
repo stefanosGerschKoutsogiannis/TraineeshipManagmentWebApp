@@ -30,7 +30,7 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.findByUsername(username).get();
     }
 
-    // change like save student profile, because model returns null fields for password, etc
+    // change like save student profile, because model returns null fields for password, etc.
     // might change the model
     @Override
     public void saveCompanyProfile(Company company) {
@@ -42,13 +42,12 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<TraineeshipPosition> retrieveAvailablePositions(String username) {
-        List<TraineeshipPosition> positions = companyRepository.findByUsername(username)
+        return companyRepository.findByUsername(username)
                 .map(Company::getPositions)
                 .orElse(Collections.emptyList())
                 .stream()
                 .filter(position -> !position.isAssigned())
                 .collect(Collectors.toList());
-        return positions;
     }
 
     @Override
@@ -86,10 +85,7 @@ public class CompanyServiceImpl implements CompanyService {
                 .stream()
                 .filter(evaluation -> evaluation.getEvaluationType().equals(EvaluationType.COMPANY))
                 .findFirst();
-        if (companyEvaluation.isPresent()) {
-            return true;
-        }
-        return false;
+        return companyEvaluation.isPresent();
     }
 
     @Override
@@ -112,8 +108,11 @@ public class CompanyServiceImpl implements CompanyService {
                 .filter(position -> position.getTraineeshipId().equals(positionId))
                 .findFirst().get();
 
+        System.out.println(positionToDelete.getTitle());
+
         // Remove position from company's list
         company.getPositions().remove(positionToDelete);
+        positionToDelete.setCompany(null);
         
         // Clear any existing evaluations
         if (positionToDelete.getEvaluations() != null) {
@@ -123,8 +122,7 @@ public class CompanyServiceImpl implements CompanyService {
         // Clear any existing student or supervisor references
         positionToDelete.setStudent(null);
         positionToDelete.setSupervisor(null);
-        
-        // Save the changes
+
         companyRepository.save(company);
     }
 

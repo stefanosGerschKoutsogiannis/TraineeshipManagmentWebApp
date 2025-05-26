@@ -34,7 +34,7 @@ public class AssignmentBasedOnInterests implements SupervisorAssignmentStrategy 
                         .split(",")
         );
 
-        double threshold = 0.5;
+        double threshold = 0.5; // might need tuning
         HashMap<Professor, Double> filteredProfessors = new HashMap<>();
 
         professors.forEach(professor -> {
@@ -45,7 +45,7 @@ public class AssignmentBasedOnInterests implements SupervisorAssignmentStrategy 
             }
         });
 
-        // If no professors meet the threshold, find the one with highest similarity anyway
+        // If no professors meet the threshold, find the one with the highest similarity anyway
         if (filteredProfessors.isEmpty()) {
             professors.forEach(professor -> {
                 Set<String> professorInterests = Set.of(professor.getInterests().toLowerCase().split(","));

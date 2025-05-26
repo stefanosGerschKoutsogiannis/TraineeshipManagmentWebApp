@@ -33,7 +33,7 @@ public class SearchBasedOnInterest implements PositionSearchStrategy {
         );
 
         List<TraineeshipPosition> returnedPositions = new ArrayList<>();
-        double threshold = 0.5;
+        double threshold = 0.5; // might need tuning
 
         for (TraineeshipPosition position : allPositions) {
             Set<String> topics = Set.of(position.getTopics().toLowerCase().split(","));

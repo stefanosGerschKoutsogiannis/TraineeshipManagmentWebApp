@@ -12,7 +12,7 @@ public class Utilities {
         return intersect / (double) union;
     }
 
-    public static int findCommon(Set<String> interests, Set<String> topics) {
+    private static int findCommon(Set<String> interests, Set<String> topics) {
         int counter = 0;
 
         for (String interest : interests) {
